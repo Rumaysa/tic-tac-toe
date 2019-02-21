@@ -3,23 +3,40 @@ class EvaluateBoard
     @board_gateway = board_gateway
     @winning_combinations = [
       [0, 1, 2],
-      [1, 4, 7],
+      [3, 4, 5],
+      [6, 7, 8],
       [0, 3, 6],
-      [8, 4, 0]
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
     ]
   end
 
-  def execute
+  def execute()
+    return 'Player one wins' if win_for_player?('X')
+    return 'Player two wins' if win_for_player?('O')
+    board = @board_gateway.fetch_board
+    return 'Game over' if board.compact.length == 0
+
+    ''
+  end
+
+  private
+
+  def win_for_player?(player)
+    players_marks = []
     board = @board_gateway.fetch_board
     if board.nil?
       nil
     else
-      players_marks = []
-      board.each_with_index { |cell, i| players_marks << i if cell == 'X' }
+      board.each_with_index { |cell, i| players_marks << i if cell == player }
       @winning_combinations.each do |combination|
-        return 'Player one wins' if combination.all? { |num| players_marks.include?(num) }
+        return true if combination.all? do |num|
+          players_marks.include?(num)
+        end
       end
-      ''
+      false
     end
   end
 end
