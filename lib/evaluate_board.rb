@@ -17,7 +17,7 @@ class EvaluateBoard
     return 'Player one wins' if win_for_player?('X')
     return 'Player two wins' if win_for_player?('O')
     board = @board_gateway.fetch_board
-    return 'Game over' if board.compact.length == 0
+    return 'Game over' if board.compact.empty?
 
     ''
   end

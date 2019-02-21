@@ -13,13 +13,12 @@ describe UpdateBoard do
     def update(player, at_index)
       @board[at_index] = player
     end
-
   end
 
-  it 'can update the board with players mark' do
-    board_gateway = BoardGatewaySpy.new
-    update_board = UpdateBoard.new(board_gateway)
+  let(:board_gateway) { BoardGatewaySpy.new }
+  let(:update_board) { UpdateBoard.new(board_gateway) }
 
+  it 'can update the board with players mark' do
     update_board.execute('X', at_index: 6)
 
     expect(board_gateway.board).to eq(
@@ -28,9 +27,6 @@ describe UpdateBoard do
   end
 
   it 'cannot allow any player to make the same move twice' do
-    board_gateway = BoardGatewaySpy.new
-    update_board = UpdateBoard.new(board_gateway)
-
     update_board.execute('X', at_index: 7)
     update_board.execute('O', at_index: 7)
 
