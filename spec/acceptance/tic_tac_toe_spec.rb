@@ -2,18 +2,18 @@
 
 require 'display_board'
 require 'update_board'
-require 'finish_the_game'
+require 'evaluate_board'
 
 describe 'tictactoe' do
   class BoardGateway
     def initialize
       @board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
     end
-  
+
     def fetch_board
       @board
     end
-  
+
     def update(player, at_index)
       @board[at_index] = player
     end
@@ -22,7 +22,7 @@ describe 'tictactoe' do
   let(:board_gateway) { BoardGateway.new }
   let(:display_board) { DisplayBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
-  let(:finish_the_game) { FinishGame.new(board_gateway) }
+  let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
 
   it 'can display the state of the board' do
     expect(display_board.execute).to eq(
@@ -46,6 +46,6 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 6)
     update_board.execute('X', at_index: 0)
 
-    expect(finish_the_game.execute).to eq('Player one wins')
+    expect(evaluate_board.execute).to eq('Player one wins')
   end
 end
