@@ -1,4 +1,4 @@
-class DisplayBoard
+class FetchBoard
   attr_reader :state
 
   def initialize(board_gateway)
