@@ -3,7 +3,7 @@
 require 'display_board'
 require 'update_board'
 require 'evaluate_board'
-# require 'clear_board'
+require 'clear_board'
 
 describe 'tictactoe' do
   class BoardGateway
