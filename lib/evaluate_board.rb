@@ -27,11 +27,9 @@ class EvaluateBoard
 
   def game_over?
     board = @board_gateway.fetch_board
-    if board.nil?
-      nil
-    else
-      return true if board.compact.length == 9
-    end
+    return false if board.nil?
+
+    board.compact.length == 9
   end
 
   def win_for_player?(player)

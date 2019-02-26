@@ -21,6 +21,8 @@ describe 'tictactoe' do
     end
   end
 
+
+
   let(:board_gateway) { BoardGateway.new }
   let(:fetch_board) { FetchBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
@@ -100,7 +102,7 @@ describe 'tictactoe' do
     expect(evaluate_board.execute).to eq('Player one wins')
   end
 
-  it 'can display the UI of the game' do
+  xit 'can display the UI of the game' do
     game = UI.new
 
     expect(game.execute).to eq(
