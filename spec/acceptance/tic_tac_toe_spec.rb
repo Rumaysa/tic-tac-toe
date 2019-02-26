@@ -4,6 +4,7 @@ require 'fetch_board'
 require 'update_board'
 require 'evaluate_board'
 require 'clear_board'
+require 'ui_board'
 
 describe 'tictactoe' do
   class BoardGateway
@@ -97,5 +98,15 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 2)
 
     expect(evaluate_board.execute).to eq('Player one wins')
+  end
+
+  it 'can display the UI of the game' do
+    game = UI.new
+
+    expect(game.execute).to eq(
+      'X|O|X
+      O|X|X
+      X|O|O'
+    )
   end
 end

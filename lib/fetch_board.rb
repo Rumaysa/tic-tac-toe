@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FetchBoard
   attr_reader :state
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClearBoard
   def initialize(board_gateway)
     @board_gateway = board_gateway

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EvaluateBoard
   def initialize(board_gateway)
     @board_gateway = board_gateway
@@ -13,7 +15,7 @@ class EvaluateBoard
     ]
   end
 
-  def execute()
+  def execute
     return 'Player one wins' if win_for_player?('X')
     return 'Player two wins' if win_for_player?('O')
     return 'Game over' if game_over?
