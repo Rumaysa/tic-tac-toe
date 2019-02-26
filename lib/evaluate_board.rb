@@ -35,16 +35,16 @@ class EvaluateBoard
   def win_for_player?(player)
     players_marks = []
     board = @board_gateway.fetch_board
-    if board.nil?
-      nil
-    else
-      board.each_with_index { |cell, i| players_marks << i if cell == player }
-      @winning_combinations.each do |combination|
-        return true if combination.all? do |num|
-          players_marks.include?(num)
-        end
-      end
-      false
+    return false if board.nil?
+
+    board.each_with_index { |cell, i| players_marks << i if cell == player }
+    @winning_combinations.each do |combination|
+      return true if intersection?(players_marks, combination)
     end
+    false
+  end
+
+  def intersection?(players_marks, combination)
+    (combination & players_marks).length == 3
   end
 end
