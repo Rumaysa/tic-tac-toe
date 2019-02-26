@@ -16,13 +16,21 @@ class EvaluateBoard
   def execute()
     return 'Player one wins' if win_for_player?('X')
     return 'Player two wins' if win_for_player?('O')
-    board = @board_gateway.fetch_board
-    return 'Game over' if board.compact.empty?
+    return 'Game over' if game_over?
 
     ''
   end
 
   private
+
+  def game_over?
+    board = @board_gateway.fetch_board
+    if board.nil?
+      nil
+    else
+      return true if board.compact.length == 9
+    end
+  end
 
   def win_for_player?(player)
     players_marks = []
