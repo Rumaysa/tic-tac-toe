@@ -39,12 +39,12 @@ class EvaluateBoard
 
     board.each_with_index { |cell, i| players_marks << i if cell == player }
     @winning_combinations.each do |combination|
-      return true if intersection?(players_marks, combination)
+      return true if match?(players_marks, combination)
     end
     false
   end
 
-  def intersection?(players_marks, combination)
+  def match?(players_marks, combination)
     (combination & players_marks).length == 3
   end
 end
