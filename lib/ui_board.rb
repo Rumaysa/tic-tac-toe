@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class UI
   def initialize(stdout:, stdin:)
@@ -21,7 +22,7 @@ class UI
   end
 
   def display_message(message)
-    @stdout.puts(message + "\n\n")
+    @stdout.puts(message.to_s + "\n\n")
   end
 
   def users_input

@@ -16,11 +16,11 @@ class EvaluateBoard
   end
 
   def execute
-    return 'Player one wins' if win_for_player?('X')
-    return 'Player two wins' if win_for_player?('O')
-    return 'Game over' if game_over?
+    return :Player_one_wins if win_for_player?('X')
+    return :Player_two_wins if win_for_player?('O')
+    return :Game_over if game_over?
 
-    ''
+    :Continue
   end
 
   private

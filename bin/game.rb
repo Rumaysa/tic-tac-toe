@@ -10,7 +10,7 @@ class InMemoryBoardGateway
   attr_reader :board
 
   def initialize
-    @board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    @board = [nil] * 9
   end
 
   def fetch_board
@@ -35,10 +35,10 @@ class Game
   def execute
     @game_ui.start
     @game_ui.display_board(@fetch_board.execute)
-    while @evaluate_board.execute == ''
+    while @evaluate_board.execute == :Continue
       prompt_player_to_place_mark
       players_choice = @game_ui.users_input.to_i
-      @update_board.execute(@active_player, at_index: players_choice-1)
+      @update_board.execute(@active_player, at_index: players_choice - 1)
       @game_ui.display_board(@fetch_board.execute)
       next_turn
     end
@@ -46,15 +46,16 @@ class Game
   end
 
   def next_turn
-    if @active_player == 'X'
-      @active_player = 'O'
-    else
-      @active_player = 'X'
-    end
+    @active_player =
+      if @active_player == 'X'
+        'O'
+      else
+        'X'
+      end
   end
 
   def prompt_player_to_place_mark
-    @game_ui.display_message("Player #{@active_player},choose a number on the grid to put your mark")
+    @game_ui.display_message("Player #{@active_player}, choose a number on the grid to put your mark")
   end
 end
 
