@@ -21,8 +21,6 @@ describe 'tictactoe' do
     end
   end
 
-
-
   let(:board_gateway) { BoardGateway.new }
   let(:fetch_board) { FetchBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
