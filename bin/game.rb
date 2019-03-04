@@ -5,28 +5,15 @@ require_relative '../lib/ui_board'
 require_relative '../lib/fetch_board'
 require_relative '../lib/update_board'
 require_relative '../lib/evaluate_board'
-
-class InMemoryBoardGateway
-  attr_reader :board
-
-  def initialize
-    @board = [nil] * 9
-  end
-
-  def fetch_board
-    @board
-  end
-
-  def update(player, at_index)
-    @board[at_index] = player
-  end
-end
+require_relative '../lib/gateway/board_gateway'
+require_relative '../lib/domain/board'
 
 class Game
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
-    @board_gateway = InMemoryBoardGateway.new
+    board = Board.new(size: 9)
+    @board_gateway = InMemoryBoardGateway.new(board)
     @fetch_board = FetchBoard.new(@board_gateway)
     @evaluate_board = EvaluateBoard.new(@board_gateway)
     @update_board = UpdateBoard.new(@board_gateway)
@@ -40,10 +27,9 @@ class Game
       begin
         place_players_mark
       rescue RangeError
-        @game_ui.display_message(
-          "\nPlease, choose a valid mark\n"
-        )
-        display_current_board
+        exception_message("\nPlease choose a valid mark\n")
+      rescue DuplicationError
+        exception_message("\nPlease choose an empty cell\n")
       else
         display_current_board
         next_turn
@@ -67,6 +53,11 @@ class Game
     @game_ui.display_message(
       "Player #{@active_player}, choose a number on the grid to put your mark: "
     )
+  end
+
+  def exception_message(message)
+    @game_ui.display_message(message)
+    display_current_board
   end
 
   def place_players_mark

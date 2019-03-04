@@ -10,16 +10,16 @@ class EvaluateBoard
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6]
-  ]
+  ].freeze
 
   def initialize(board_gateway)
     @board_gateway = board_gateway
   end
 
   def execute
-    return :Player_one_wins if win_for_player?('X')
-    return :Player_two_wins if win_for_player?('O')
-    return :Game_over if game_over?
+    return :"Player one wins" if win_for_player?('X')
+    return :"Player two wins" if win_for_player?('O')
+    return :"Game over" if game_over?
 
     :Continue
   end

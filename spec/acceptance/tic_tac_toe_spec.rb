@@ -49,7 +49,7 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 6)
     update_board.execute('X', at_index: 0)
 
-    expect(evaluate_board.execute).to eq(:Player_one_wins)
+    expect(evaluate_board.execute).to eq(:"Player one wins")
 
     clear_board.execute
 
@@ -59,7 +59,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 0)
 
-    expect(evaluate_board.execute).to eq(:Player_two_wins)
+    expect(evaluate_board.execute).to eq(:"Player two wins")
 
     clear_board.execute
 
@@ -69,7 +69,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 5)
 
-    expect(evaluate_board.execute).to eq(:Player_two_wins)
+    expect(evaluate_board.execute).to eq(:"Player two wins")
   end
 
   it 'can display the outcome of two full games' do
@@ -83,7 +83,7 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 7)
     update_board.execute('O', at_index: 8)
 
-    expect(evaluate_board.execute).to eq(:Game_over)
+    expect(evaluate_board.execute).to eq(:"Game over")
 
     clear_board.execute
 
@@ -97,16 +97,6 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 8)
     update_board.execute('X', at_index: 2)
 
-    expect(evaluate_board.execute).to eq(:Player_one_wins)
-  end
-
-  xit 'can display the UI of the game' do
-    game = UI.new
-
-    expect(game.execute).to eq(
-      'X|O|X
-      O|X|X
-      X|O|O'
-    )
+    expect(evaluate_board.execute).to eq(:"Player one wins")
   end
 end

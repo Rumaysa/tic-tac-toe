@@ -32,13 +32,13 @@ describe UpdateBoard do
     update_board.execute('X', at_index: 7)
 
     expect do
-      update_board.execute('O', at_index: 7) 
+      update_board.execute('O', at_index: 7)
     end.to raise_error(DuplicationError)
   end
 
   it 'cannot allow any player to mark incorrectly' do
     expect do
-      update_board.execute('X', at_index: 12)
+      update_board.execute('X', at_index: 9)
     end.to raise_error(RangeError)
   end
 

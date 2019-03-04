@@ -5,7 +5,7 @@ class FetchBoard
 
   def initialize(board_gateway)
     @board_gateway = board_gateway
-    @state = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    @state = []
   end
 
   def execute

@@ -16,7 +16,7 @@ class UpdateBoard
   private
 
   def index_in_range?(index, range)
-    (0..range).cover?(index)
+    (0...range).cover?(index)
   end
 end
 
