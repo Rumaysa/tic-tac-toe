@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 class UI
   def initialize(stdout:, stdin:)
@@ -7,12 +6,12 @@ class UI
   end
 
   def start
-    title = color("\n      TIC TAC TOE\n", 31)
+    title = color("\n      TIC TAC TOE", 31)
     @stdout.puts(title)
   end
 
   def display_board(board)
-    new_board = "1|2|3\n4|5|6\n7|8|9\n\n"
+    new_board = "\n1|2|3\n4|5|6\n7|8|9\n\n"
     board.each_with_index do |cell, i|
       new_board.gsub!((i + 1).to_s, cell) unless cell.nil?
     end
@@ -22,7 +21,7 @@ class UI
   end
 
   def display_message(message)
-    @stdout.puts(message.to_s + "\n\n")
+    @stdout.print(message)
   end
 
   def users_input

@@ -37,9 +37,17 @@ class Game
     display_current_board
     while @evaluate_board.execute == :Continue
       prompt_player_to_place_mark
-      place_players_mark
-      display_current_board
-      next_turn
+      begin
+        place_players_mark
+      rescue RangeError
+        @game_ui.display_message(
+          "\nPlease, choose a valid mark\n"
+        )
+        display_current_board
+      else
+        display_current_board
+        next_turn
+      end
     end
     display_outcome
   end
@@ -57,7 +65,7 @@ class Game
 
   def prompt_player_to_place_mark
     @game_ui.display_message(
-      "Player #{@active_player}, choose a number on the grid to put your mark"
+      "Player #{@active_player}, choose a number on the grid to put your mark: "
     )
   end
 
@@ -71,7 +79,8 @@ class Game
   end
 
   def display_outcome
-    @game_ui.display_message(@evaluate_board.execute)
+    outcome = @evaluate_board.execute.to_s + "\n"
+    @game_ui.display_message(outcome)
   end
 end
 
