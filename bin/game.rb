@@ -34,16 +34,17 @@ class Game
 
   def execute
     @game_ui.start
-    @game_ui.display_board(@fetch_board.execute)
+    display_current_board
     while @evaluate_board.execute == :Continue
       prompt_player_to_place_mark
-      players_choice = @game_ui.users_input.to_i
-      @update_board.execute(@active_player, at_index: players_choice - 1)
-      @game_ui.display_board(@fetch_board.execute)
+      place_players_mark
+      display_current_board
       next_turn
     end
-    @game_ui.display_message(@evaluate_board.execute)
+    display_outcome
   end
+
+  private
 
   def next_turn
     @active_player =
@@ -55,7 +56,22 @@ class Game
   end
 
   def prompt_player_to_place_mark
-    @game_ui.display_message("Player #{@active_player}, choose a number on the grid to put your mark")
+    @game_ui.display_message(
+      "Player #{@active_player}, choose a number on the grid to put your mark"
+    )
+  end
+
+  def place_players_mark
+    players_choice = @game_ui.users_input.to_i
+    @update_board.execute(@active_player, at_index: players_choice - 1)
+  end
+
+  def display_current_board
+    @game_ui.display_board(@fetch_board.execute)
+  end
+
+  def display_outcome
+    @game_ui.display_message(@evaluate_board.execute)
   end
 end
 

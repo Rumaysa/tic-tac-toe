@@ -5,7 +5,7 @@ describe UpdateBoard do
     attr_reader :board
 
     def initialize
-      @board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      @board = Array.new(9, nil)
     end
 
     def fetch_board
@@ -35,5 +35,17 @@ describe UpdateBoard do
     expect(board_gateway.board).to eq(
       [nil, nil, nil, nil, nil, nil, nil, 'X', nil]
     )
+  end
+
+  it 'cannot allow any player to mark incorrectly' do
+    expect do
+      update_board.execute('X', at_index: 12)
+    end.to raise_error(RangeError)
+  end
+
+  it 'cannot allow any player to mark incorrectly, example 2' do
+    expect do
+      update_board.execute('X', at_index: - 1)
+    end.to raise_error(RangeError)
   end
 end
