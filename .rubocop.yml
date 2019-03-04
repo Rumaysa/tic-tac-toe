@@ -1,0 +1,24 @@
+require: rubocop-rspec
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/**/*.rb'
+
+RSpec/DescribeClass:
+    Exclude:
+      - 'spec/acceptance/*.rb'
+
+Style/Documentation:
+  Enabled: False
+
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/check_game_state.rb'

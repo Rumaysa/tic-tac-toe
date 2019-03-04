@@ -8,8 +8,9 @@ class UpdateBoard
   def execute(player, at_index:)
     board = @board_gateway.fetch_board
     raise RangeError unless index_in_range?(at_index, board.length)
+    raise DuplicationError unless board[at_index].nil?
 
-    @board_gateway.update(player, at_index) if board[at_index].nil?
+    @board_gateway.update(player, at_index)
   end
 
   private
@@ -17,4 +18,7 @@ class UpdateBoard
   def index_in_range?(index, range)
     (0..range).cover?(index)
   end
+end
+
+class DuplicationError < StandardError
 end

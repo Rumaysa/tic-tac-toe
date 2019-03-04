@@ -30,11 +30,10 @@ describe UpdateBoard do
 
   it 'cannot allow any player to make the same move twice' do
     update_board.execute('X', at_index: 7)
-    update_board.execute('O', at_index: 7)
 
-    expect(board_gateway.board).to eq(
-      [nil, nil, nil, nil, nil, nil, nil, 'X', nil]
-    )
+    expect do
+      update_board.execute('O', at_index: 7) 
+    end.to raise_error(DuplicationError)
   end
 
   it 'cannot allow any player to mark incorrectly' do
@@ -45,7 +44,7 @@ describe UpdateBoard do
 
   it 'cannot allow any player to mark incorrectly, example 2' do
     expect do
-      update_board.execute('X', at_index: - 1)
+      update_board.execute('X', at_index: -1)
     end.to raise_error(RangeError)
   end
 end
