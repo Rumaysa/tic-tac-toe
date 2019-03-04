@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe ClearBoard do
   class BoardGatewaySpyTwo
     attr_reader :board

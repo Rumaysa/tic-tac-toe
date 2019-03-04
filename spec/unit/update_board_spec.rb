@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe UpdateBoard do
   class BoardGatewaySpy
     attr_reader :board

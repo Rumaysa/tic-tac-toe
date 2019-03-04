@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe EvaluateBoard do
   class BoardGatewayStub
     attr_writer :board

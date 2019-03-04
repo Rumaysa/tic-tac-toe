@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateBoard
   def initialize(board_gateway)
     @board_gateway = board_gateway
