@@ -1,4 +1,3 @@
-
 class UI
   def initialize(stdout:, stdin:)
     @stdout = stdout
