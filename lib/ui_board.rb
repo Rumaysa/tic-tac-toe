@@ -27,6 +27,17 @@ class UI
     @stdin.gets
   end
 
+  def interpret_game_status(status)
+    case status
+    when :player_one_wins 
+      "Player one wins\n"
+    when :player_two_wins
+      "Player two wins\n"
+    when :game_over
+      "Game Over!\n"
+    end
+  end
+
   private
 
   def change_mark_colour_for(player, colour_code, board)
@@ -37,3 +48,4 @@ class UI
     "\e[#{color_code}m\e[1m#{mark}\e[0m"
   end
 end
+

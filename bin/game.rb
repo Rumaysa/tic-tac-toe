@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 require_relative '../lib/ui_board'
-require_relative '../lib/fetch_board'
-require_relative '../lib/update_board'
-require_relative '../lib/evaluate_board'
+require_relative '../lib/use_case/fetch_board'
+require_relative '../lib/use_case/update_board'
+require_relative '../lib/use_case/evaluate_board'
 require_relative '../lib/gateway/board_gateway'
 require_relative '../lib/domain/board'
 
@@ -22,7 +22,7 @@ class Game
   def execute
     @game_ui.start
     display_current_board
-    while @evaluate_board.execute == :Continue
+    while @evaluate_board.execute == :continue
       prompt_player_to_place_mark
       begin
         place_players_mark
@@ -41,12 +41,7 @@ class Game
   private
 
   def next_turn
-    @active_player =
-      if @active_player == 'X'
-        'O'
-      else
-        'X'
-      end
+    @active_player = @active_player == 'X' ? 'O' : 'X'
   end
 
   def prompt_player_to_place_mark
@@ -70,7 +65,8 @@ class Game
   end
 
   def display_outcome
-    outcome = @evaluate_board.execute.to_s + "\n"
+    game_status = @evaluate_board.execute
+    outcome = @game_ui.interpret_game_status(game_status)
     @game_ui.display_message(outcome)
   end
 end
