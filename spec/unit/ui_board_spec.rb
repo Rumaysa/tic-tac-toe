@@ -8,7 +8,7 @@ describe UI do
   end
 
   it 'can show an empty UI board' do
-    board = Array.new(9, nil)
+    board = Board.new(size: 9)
 
     expect(STDOUT).to receive(:puts).with("\n1|2|3\n4|5|6\n7|8|9\n\n")
     ui.display_board(board)
