@@ -1,4 +1,3 @@
-
 class UI
   def initialize(stdout:, stdin:)
     @stdout = stdout
@@ -6,12 +5,12 @@ class UI
   end
 
   def start
-    title = color("\n      TIC TAC TOE\n", 31)
+    title = color("\n      TIC TAC TOE", 31)
     @stdout.puts(title)
   end
 
   def display_board(board)
-    new_board = "1|2|3\n4|5|6\n7|8|9\n\n"
+    new_board = "\n1|2|3\n4|5|6\n7|8|9\n\n"
     board.each_with_index do |cell, i|
       new_board.gsub!((i + 1).to_s, cell) unless cell.nil?
     end
@@ -21,11 +20,22 @@ class UI
   end
 
   def display_message(message)
-    @stdout.puts(message + "\n\n")
+    @stdout.print(message)
   end
 
   def users_input
     @stdin.gets
+  end
+
+  def interpret_game_status(status)
+    case status
+    when :player_one_wins 
+      "Player one wins\n"
+    when :player_two_wins
+      "Player two wins\n"
+    when :game_over
+      "Game Over!\n"
+    end
   end
 
   private
@@ -38,3 +48,4 @@ class UI
     "\e[#{color_code}m\e[1m#{mark}\e[0m"
   end
 end
+

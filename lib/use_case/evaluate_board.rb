@@ -10,18 +10,18 @@ class EvaluateBoard
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6]
-  ]
+  ].freeze
 
   def initialize(board_gateway)
     @board_gateway = board_gateway
   end
 
   def execute
-    return 'Player one wins' if win_for_player?('X')
-    return 'Player two wins' if win_for_player?('O')
-    return 'Game over' if game_over?
+    return :player_one_wins if win_for_player?('X')
+    return :player_two_wins if win_for_player?('O')
+    return :game_over if game_over?
 
-    ''
+    :continue
   end
 
   private
@@ -40,12 +40,12 @@ class EvaluateBoard
     players_marks = []
     board.each_with_index { |cell, i| players_marks << i if cell == player }
     WINNING_COMBINATIONS.each do |combination|
-      return true if intersection?(players_marks, combination)
+      return true if match?(players_marks, combination)
     end
     false
   end
 
-  def intersection?(players_marks, combination)
+  def match?(players_marks, combination)
     (combination & players_marks).length == 3
   end
 end

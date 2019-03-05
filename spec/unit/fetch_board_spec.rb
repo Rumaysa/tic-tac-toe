@@ -13,8 +13,8 @@ describe FetchBoard do
   let(:fetch_board) { FetchBoard.new(board_gateway) }
 
   it 'displays an empty board when player never moved' do
-    board_gateway.board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
-    expect(fetch_board.execute).to eq([nil, nil, nil, nil, nil, nil, nil, nil, nil])
+    board_gateway.board = Array.new(9, nil)
+    expect(fetch_board.execute).to eq(Array.new(9, nil))
   end
 
   it 'displays the board with a mark' do

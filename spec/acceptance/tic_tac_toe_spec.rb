@@ -1,27 +1,16 @@
 # frozen_string_literal: true
 
-require 'fetch_board'
-require 'update_board'
-require 'evaluate_board'
-require 'clear_board'
+require 'gateway/board_gateway'
+require 'use_case/fetch_board'
+require 'use_case/update_board'
+require 'use_case/evaluate_board'
+require 'use_case/clear_board'
 require 'ui_board'
+require 'domain/board'
 
 describe 'tictactoe' do
-  class BoardGateway
-    def initialize
-      @board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
-    end
-
-    def fetch_board
-      @board
-    end
-
-    def update(player, at_index)
-      @board[at_index] = player
-    end
-  end
-
-  let(:board_gateway) { BoardGateway.new }
+  let(:board) {Board.new(size: 9)}
+  let(:board_gateway) { InMemoryBoardGateway.new(board) }
   let(:fetch_board) { FetchBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
@@ -29,7 +18,7 @@ describe 'tictactoe' do
 
   it 'can display the state of the board' do
     expect(fetch_board.execute).to eq(
-      [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      Array.new(9, nil)
     )
   end
 
@@ -49,7 +38,7 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 6)
     update_board.execute('X', at_index: 0)
 
-    expect(evaluate_board.execute).to eq('Player one wins')
+    expect(evaluate_board.execute).to eq(:player_one_wins)
 
     clear_board.execute
 
@@ -59,7 +48,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 0)
 
-    expect(evaluate_board.execute).to eq('Player two wins')
+    expect(evaluate_board.execute).to eq(:player_two_wins)
 
     clear_board.execute
 
@@ -69,7 +58,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 5)
 
-    expect(evaluate_board.execute).to eq('Player two wins')
+    expect(evaluate_board.execute).to eq(:player_two_wins)
   end
 
   it 'can display the outcome of two full games' do
@@ -83,7 +72,7 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 7)
     update_board.execute('O', at_index: 8)
 
-    expect(evaluate_board.execute).to eq('Game over')
+    expect(evaluate_board.execute).to eq(:game_over)
 
     clear_board.execute
 
@@ -97,16 +86,6 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 8)
     update_board.execute('X', at_index: 2)
 
-    expect(evaluate_board.execute).to eq('Player one wins')
-  end
-
-  xit 'can display the UI of the game' do
-    game = UI.new
-
-    expect(game.execute).to eq(
-      'X|O|X
-      O|X|X
-      X|O|O'
-    )
+    expect(evaluate_board.execute).to eq(:player_one_wins)
   end
 end
