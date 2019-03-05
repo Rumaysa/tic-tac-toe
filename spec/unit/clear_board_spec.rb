@@ -19,9 +19,7 @@ describe ClearBoard do
 
     clear_board.execute
 
-    expect(board_gateway.board).to eq(
-      [nil, nil, nil, nil, nil, nil, nil, nil, nil]
-    )
+    expect(board_gateway.board).to eq(Array.new(9, nil))
   end
 
   it 'can clear the board' do

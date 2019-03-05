@@ -9,7 +9,7 @@ require 'ui_board'
 describe 'tictactoe' do
   class BoardGateway
     def initialize
-      @board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      @board = Array.new(9, nil)
     end
 
     def fetch_board
@@ -29,7 +29,7 @@ describe 'tictactoe' do
 
   it 'can display the state of the board' do
     expect(fetch_board.execute).to eq(
-      [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      Array.new(9, nil)
     )
   end
 

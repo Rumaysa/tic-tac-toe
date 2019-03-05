@@ -13,7 +13,7 @@ describe EvaluateBoard do
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
 
   it 'continues the game until winning combination or all squares filled' do
-    expect(evaluate_board.execute).to eq(:Continue)
+    expect(evaluate_board.execute).to eq(:continue)
   end
 
   context 'has the winner' do

@@ -21,7 +21,7 @@ class EvaluateBoard
     return :"Player two wins" if win_for_player?('O')
     return :"Game over" if game_over?
 
-    :Continue
+    :continue
   end
 
   private
