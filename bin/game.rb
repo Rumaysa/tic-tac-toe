@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require_relative '../lib/ui_board'
-require_relative '../lib/use_case/fetch_board'
 require_relative '../lib/use_case/update_board'
 require_relative '../lib/use_case/evaluate_board'
 require_relative '../lib/gateway/board_gateway'
@@ -14,7 +13,6 @@ class Game
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
     board = Board.new(size: 9)
     @board_gateway = InMemoryBoardGateway.new(board)
-    @fetch_board = FetchBoard.new(@board_gateway)
     @evaluate_board = EvaluateBoard.new(@board_gateway)
     @update_board = UpdateBoard.new(@board_gateway)
   end
@@ -61,7 +59,7 @@ class Game
   end
 
   def display_current_board
-    @game_ui.display_board(@fetch_board.execute)
+    @game_ui.display_board(@board_gateway.fetch_board)
   end
 
   def display_outcome

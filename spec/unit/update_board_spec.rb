@@ -1,23 +1,8 @@
 # frozen_string_literal: true
 
 describe UpdateBoard do
-  class BoardGatewaySpy
-    attr_reader :board
-
-    def initialize
-      @board = Array.new(9, nil)
-    end
-
-    def fetch_board
-      @board
-    end
-
-    def update(player, at_index)
-      @board[at_index] = player
-    end
-  end
-
-  let(:board_gateway) { BoardGatewaySpy.new }
+  
+  let(:board_gateway) { BoardGatewaySpy.new(Board.new(size: 9)) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 
   it 'can update the board with players mark' do

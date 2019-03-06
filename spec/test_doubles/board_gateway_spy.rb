@@ -1,6 +1,6 @@
-# frozen_string_literal: true
+class BoardGatewaySpy
+  attr_reader :board
 
-class InMemoryBoardGateway
   def initialize(board)
     @board = board
   end

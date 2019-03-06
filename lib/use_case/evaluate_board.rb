@@ -24,7 +24,6 @@ class EvaluateBoard
 
   def win_for_player?(player)
     board = @board_gateway.fetch_board
-    return false if board.nil?
 
     players_marks = []
     board.each_with_index { |cell, i| players_marks << i if cell == player }

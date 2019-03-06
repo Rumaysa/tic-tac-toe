@@ -1,20 +1,8 @@
 # frozen_string_literal: true
 
 describe ClearBoard do
-  class BoardGatewaySpyTwo
-    attr_reader :board
-
-    def initialize(board)
-      @board = board
-    end
-
-    def fetch_board
-      @board
-    end
-  end
-
   def test_for_board(board)
-    board_gateway = BoardGatewaySpyTwo.new(board)
+    board_gateway = BoardGatewaySpy.new(board)
     clear_board = ClearBoard.new(board_gateway)
 
     clear_board.execute

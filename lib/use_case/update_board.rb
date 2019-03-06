@@ -10,7 +10,8 @@ class UpdateBoard
     raise RangeError unless index_in_range?(at_index, board.length)
     raise DuplicationError unless board[at_index].nil?
 
-    @board_gateway.update(player, at_index)
+    board[at_index] = player
+    @board_gateway.update(board)
   end
 
   private
