@@ -1,5 +1,5 @@
-describe Find_winning_combinations do
-  let(:winning_combinations) { Find_winning_combinations.new }
+describe FindWinningCombinations do
+  let(:winning_combinations) { FindWinningCombinations.new }
   it 'will throw an error if the board is not a square' do
     board = Array.new(3, nil)
     expect do
