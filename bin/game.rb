@@ -11,7 +11,7 @@ class Game
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
-    board = Board.new(size: 9)
+    board = Board.new(width: 3)
     @board_gateway = InMemoryBoardGateway.new(board)
     @evaluate_board = EvaluateBoard.new(@board_gateway)
     @update_board = UpdateBoard.new(@board_gateway)

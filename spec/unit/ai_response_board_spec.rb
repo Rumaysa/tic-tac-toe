@@ -128,7 +128,7 @@ describe AIResponse do
       expect(ai_response.execute(board)).to eq(6)
     end
 
-    it 'can block player from winning, example 11' do
+    xit 'can block player from winning, example 11' do
       ai_response = AIResponse.new
 
       board = ['X', nil, nil,
@@ -140,7 +140,7 @@ describe AIResponse do
   end
 
   context 'AI tries to win if '
-  it '' do
+  xit '' do
     ai_response = AIResponse.new
 
     board = ['X', nil, nil,

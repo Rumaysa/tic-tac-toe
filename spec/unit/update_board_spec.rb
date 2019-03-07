@@ -2,7 +2,7 @@
 
 describe UpdateBoard do
   
-  let(:board_gateway) { BoardGatewaySpy.new(Board.new(size: 9)) }
+  let(:board_gateway) { BoardGatewaySpy.new(Board.new(width: 3)) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 
   it 'can update the board with players mark' do

@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 require 'gateway/board_gateway'
+require 'use_case/view_board'
 require 'use_case/update_board'
 require 'use_case/evaluate_board'
 require 'use_case/clear_board'
 require 'use_case/ai_response_board'
+require 'use_case/find_winning_combinations'
 require 'ui_board'
 require 'domain/board'
 require 'test_doubles/board_gateway_spy'
 require 'test_doubles/board_gateway_stub'
 
 describe 'tictactoe' do
-  let(:board) { Board.new(size: 9) }
+  let(:board) { Board.new(width: 3) }
   let(:board_gateway) { InMemoryBoardGateway.new(board) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
@@ -20,7 +22,7 @@ describe 'tictactoe' do
 
   it 'can initialise an empty board' do
     expect(board_gateway.fetch_board).to eq(
-      Board.new(size:9)
+      Board.new(width: 3)
     )
   end
 

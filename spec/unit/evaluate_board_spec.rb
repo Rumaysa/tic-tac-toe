@@ -6,7 +6,7 @@ describe EvaluateBoard do
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
 
   it 'continues the game until winning combination or all squares filled' do
-    board_gateway.board = Board.new(size: 9)
+    board_gateway.board = Board.new(width: 3)
     expect(evaluate_board.execute).to eq(:continue)
   end
 
