@@ -35,13 +35,13 @@ describe EvaluateBoard do
       expect(evaluate_board.execute).to eq(:player_two_wins)
     end
 
-    it 'evaluates winning marks in a diagonal' do
+    it 'evaluates winning marks in right diagonal' do
       board_gateway.board = [nil, nil, 'O', nil, 'O', nil, 'O', 'X', 'X']
 
       expect(evaluate_board.execute).to eq(:player_two_wins)
     end
 
-    it 'evaluates winning marks in a negative diagonal' do
+    it 'evaluates winning marks in a left diagonal' do
       board_gateway.board = ['O', nil, nil, nil, 'O', nil, 'X', 'X', 'O']
 
       expect(evaluate_board.execute).to eq(:player_two_wins)

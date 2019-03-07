@@ -25,7 +25,7 @@ class EvaluateBoard
   def win_for_player?(player)
     board = @board_gateway.fetch_board
 
-    players_marks = []
+    players_marks = [] 
     board.each_with_index { |cell, i| players_marks << i if cell == player }
     WINNING_COMBINATIONS.each do |combination|
       return true if match?(players_marks, combination)

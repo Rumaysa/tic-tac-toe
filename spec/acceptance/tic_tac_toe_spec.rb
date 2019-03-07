@@ -16,9 +16,9 @@ describe 'tictactoe' do
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
   let(:clear_board) { ClearBoard.new(board_gateway) }
-  # let(:ai_response_board) { AIResponse.new(board_gateway) }
+  let(:ai_response_board) { AIResponse.new }
 
-  it 'can display the state of an empty board' do
+  it 'can initialise an empty board' do
     expect(board_gateway.fetch_board).to eq(
       Board.new(size:9)
     )
@@ -91,17 +91,22 @@ describe 'tictactoe' do
     expect(evaluate_board.execute).to eq(:player_one_wins)
   end
 
-  # xit 'can beat the player using AI' do
-  #   update_board.execute('X', at_index: 0)
-  #   ai_response_board.execute(board)
-  #   update_board.execute('X', at_index: 1)
-  #   ai_response_board.execute(board)
-  #   update_board.execute('X', at_index: 3)
-  #   ai_response_board.execute(board)
+  it 'can beat the player using AI' do
+    update_board.execute('X', at_index: 0)
+    ai_choice = ai_response_board.execute(board)
+    update_board.execute('O', at_index: ai_choice)
 
-  #   expect(board_gateway.fetch_board).to eq(
-  #     ['X', nil, nil, nil, 'O', nil, nil, nil, nil]
-  #   )
-  #   expect(evaluate_board.execute).to eq(:player_two_wins)
-  # end
+    update_board.execute('X', at_index: 1)
+    ai_choice = ai_response_board.execute(board)
+    update_board.execute('O', at_index: ai_choice)
+
+    update_board.execute('X', at_index: 3)
+    ai_choice = ai_response_board.execute(board)
+    update_board.execute('O', at_index: ai_choice)
+
+    expect(board_gateway.fetch_board).to eq(
+      ['X', 'X', 'O', 'X', 'O', nil, 'O', nil, nil]
+    )
+    expect(evaluate_board.execute).to eq(:player_two_wins)
+  end
 end
