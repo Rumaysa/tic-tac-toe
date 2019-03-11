@@ -127,26 +127,16 @@ describe AIResponse do
 
       expect(ai_response.execute(board)).to eq(6)
     end
-
-    xit 'can block player from winning, example 11' do
-      ai_response = AIResponse.new
-
-      board = ['X', nil, nil,
-              nil, 'O', nil,
-              nil, nil, 'X']
-
-      expect(ai_response.execute(board)).to eq(2)
-    end
   end
 
-  context 'AI tries to win if '
-  xit '' do
+  context 'AI looks for all possible outcomes '
+  it 'can play a tie' do
     ai_response = AIResponse.new
 
-    board = ['X', nil, nil,
+    board = ['X', 'O', nil,
             nil, 'O', nil,
-            nil, nil, 'X']
+            nil, 'X', 'X']
 
-    expect(ai_response.execute(board)).to eq(nil)
+    expect(ai_response.execute(board)).to eq(6)
   end
 end

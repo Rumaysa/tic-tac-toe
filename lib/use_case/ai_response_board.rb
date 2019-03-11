@@ -24,6 +24,17 @@ class AIResponse
 
   private
 
+  def minimax(board, max: true)
+    empty_cell_indexes = board.map.with_index { |cell, i| i if cell.nil? }
+    choices = []
+    empty_cell_indexes.each do |cell_index|
+      temp_board = board
+      board[cell_index] = 'X'
+      # choices = [cell_index, score] if temp_board_winning
+      # minimax(temp_board)
+    end
+  end
+
   def block_opponent(board)
     ai_response = []
     WINNING_COMBINATIONS.each do |combination|
