@@ -18,20 +18,27 @@ class AIResponse
     elsif board[4] == 'X'
       0
     else
+      # minimax(board, 'O')[1]
       block_opponent(board)
     end
   end
 
   private
 
-  def minimax(board, max: true)
+  def minimax(board, player)
     empty_cell_indexes = board.map.with_index { |cell, i| i if cell.nil? }
-    choices = []
+    scored_moves = []
     empty_cell_indexes.each do |cell_index|
       temp_board = board
-      board[cell_index] = 'X'
-      # choices = [cell_index, score] if temp_board_winning
-      # minimax(temp_board)
+      temp_board[cell_index] = player
+      scored_moves << [10, cell_index] if temp_board.evaluate == :player_two_wins
+      scored_moves << [-10, cell_index] if temp_board.evaluate == :player_two_wins
+      scored_moves << [0, cell_index] if temp_board.evaluate == :game_over
+      if player == 'O'
+        scored_moves << minimax(temp_board, 'X')
+      else
+        scored_moves << minimax(temp_board, 'O')
+      end
     end
   end
 
