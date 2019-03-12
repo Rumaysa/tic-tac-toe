@@ -2,7 +2,13 @@
 
 describe EvaluateBoard do
   let(:board_gateway) { BoardGatewayStub.new }
-  let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
+  let(:find_wining_combinations) { FindWinningCombinations.new }
+  let(:winning_combinations) do
+    find_wining_combinations.execute(Board.new(width: 3))
+  end
+  let(:evaluate_board) do
+    EvaluateBoard.new(board_gateway, winning_combinations)
+  end
 
   it 'continues the game until winning combination or all squares filled' do
     board_gateway.board = Board.new(width: 3)

@@ -1,16 +1,9 @@
 # frozen_string_literal: true
 
 class AIResponse
-  WINNING_COMBINATIONS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ].freeze
+  def initialize(winning_combinations)
+    @winning_combinations = winning_combinations
+  end
 
   def execute(board)
     if board[4].nil?
@@ -18,7 +11,6 @@ class AIResponse
     elsif board[4] == 'X'
       0
     else
-      # minimax(board, 'O')[1]
       block_opponent(board)
     end
   end
@@ -26,21 +18,18 @@ class AIResponse
   private
 
   def block_opponent(board)
-    ai_response = []
-    WINNING_COMBINATIONS.each do |combination|
-      combination.each do |index|
-        ai_response << index if board[index] != 'X'
-      end
-      if ai_response.length == 1 && empty_cell?(ai_response.first, board)
-        return ai_response.first
-      end
+    @chance_to_block = []
+    @winning_combinations.each do |combination|
+      next if already_blocked(combination, board)
 
-      ai_response = []
+      @chance_to_block << combination.select { |i| i if board[i] != 'X' }
     end
-    nil
+    @chance_to_block.select do |chances|
+      chances if chances.length == 1
+    end.first.first
   end
 
-  def empty_cell?(at_index, board)
-    board[at_index].nil?
+  def already_blocked(combination, board)
+    combination.any? { |i| board[i] == 'O' }
   end
 end

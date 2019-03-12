@@ -17,9 +17,15 @@ describe 'tictactoe' do
   let(:board_gateway) { InMemoryBoardGateway.new(board) }
   let(:view_board) { ViewBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
-  let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
   let(:clear_board) { ClearBoard.new(board_gateway) }
-  let(:ai_response_board) { AIResponse.new }
+  let(:find_wining_combinations) { FindWinningCombinations.new }
+  let(:winning_combinations) do
+    find_wining_combinations.execute(Board.new(width: 3))
+  end
+  let(:ai_response_board) { AIResponse.new(winning_combinations) }
+  let(:evaluate_board) do
+    EvaluateBoard.new(board_gateway, winning_combinations)
+  end
 
   it 'can initialise an empty board' do
     expect(view_board.execute).to eq(
