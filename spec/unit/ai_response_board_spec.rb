@@ -32,8 +32,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = ['X', 'X', nil,
-              nil, 'O', nil,
-              nil, nil, nil]
+               nil, 'O', nil,
+               nil, nil, nil]
 
       expect(ai_response.execute(board)).to eq(2)
     end
@@ -42,8 +42,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = ['X', nil, 'X',
-              nil, 'O', nil,
-              nil, nil, nil]
+               nil, 'O', nil,
+               nil, nil, nil]
 
       expect(ai_response.execute(board)).to eq(1)
     end
@@ -52,8 +52,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = ['X', nil, nil,
-              'X', 'O', nil,
-              nil, nil, nil]
+               'X', 'O', nil,
+               nil, nil, nil]
 
       expect(ai_response.execute(board)).to eq(6)
     end
@@ -62,8 +62,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = ['X', nil, nil,
-              nil, 'O', nil,
-              'X', nil, nil]
+               nil, 'O', nil,
+               'X', nil, nil]
 
       expect(ai_response.execute(board)).to eq(3)
     end
@@ -72,8 +72,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, 'X', 'X',
-              nil, 'O', nil,
-              nil, nil, nil]
+               nil, 'O', nil,
+               nil, nil, nil]
 
       expect(ai_response.execute(board)).to eq(0)
     end
@@ -82,8 +82,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, nil, 'X',
-              nil, 'O', 'X',
-              nil, nil, nil]
+               nil, 'O', 'X',
+               nil, nil, nil]
 
       expect(ai_response.execute(board)).to eq(8)
     end
@@ -92,8 +92,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, nil, nil,
-              'X', 'O', nil,
-              'X', nil, nil]
+               'X', 'O', nil,
+               'X', nil, nil]
 
       expect(ai_response.execute(board)).to eq(0)
     end
@@ -102,8 +102,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, nil, nil,
-              nil, 'O', 'X',
-              nil, nil, 'X']
+               nil, 'O', 'X',
+               nil, nil, 'X']
 
       expect(ai_response.execute(board)).to eq(2)
     end
@@ -112,8 +112,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, nil, nil,
-              nil, 'O', nil,
-              'X', 'X', nil]
+               nil, 'O', nil,
+               'X', 'X', nil]
 
       expect(ai_response.execute(board)).to eq(8)
     end
@@ -122,8 +122,8 @@ describe AIResponse do
       ai_response = AIResponse.new
 
       board = [nil, nil, nil,
-              nil, 'O', nil,
-              nil, 'X', 'X']
+               nil, 'O', nil,
+               nil, 'X', 'X']
 
       expect(ai_response.execute(board)).to eq(6)
     end
@@ -134,8 +134,8 @@ describe AIResponse do
     ai_response = AIResponse.new
 
     board = ['X', 'O', nil,
-            nil, 'O', nil,
-            nil, 'X', 'X']
+             nil, 'O', nil,
+             nil, 'X', 'X']
 
     expect(ai_response.execute(board)).to eq(6)
   end

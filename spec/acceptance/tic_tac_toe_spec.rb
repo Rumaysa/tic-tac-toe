@@ -5,7 +5,7 @@ require 'use_case/view_board'
 require 'use_case/update_board'
 require 'use_case/evaluate_board'
 require 'use_case/clear_board'
-require 'use_case/ai_response_board' 
+require 'use_case/ai_response_board'
 require 'use_case/find_winning_combinations'
 require 'ui_board'
 require 'domain/board'
@@ -15,14 +15,14 @@ require 'test_doubles/board_gateway_stub'
 describe 'tictactoe' do
   let(:board) { Board.new(width: 3) }
   let(:board_gateway) { InMemoryBoardGateway.new(board) }
-  let(:view_board) {ViewBoard.new(board_gateway)}
+  let(:view_board) { ViewBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
   let(:clear_board) { ClearBoard.new(board_gateway) }
   let(:ai_response_board) { AIResponse.new }
 
   it 'can initialise an empty board' do
-    expect(board_gateway.fetch_board).to eq(
+    expect(view_board.execute).to eq(
       Board.new(width: 3)
     )
   end
@@ -31,7 +31,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 8)
     update_board.execute('O', at_index: 5)
 
-    expect(board_gateway.fetch_board).to eq(
+    expect(view_board.execute).to eq(
       [nil, nil, nil, nil, nil, 'O', nil, nil, 'X']
     )
   end
@@ -95,7 +95,6 @@ describe 'tictactoe' do
   end
 
   it 'can beat the player using AI' do
-
     def put_players_mark_at(index)
       update_board.execute('X', at_index: index)
       board = view_board.execute
@@ -107,7 +106,7 @@ describe 'tictactoe' do
     put_players_mark_at(1)
     put_players_mark_at(3)
 
-    expect(board_gateway.fetch_board).to eq(
+    expect(view_board.execute).to eq(
       ['X', 'X', 'O', 'X', 'O', nil, 'O', nil, nil]
     )
     expect(evaluate_board.execute).to eq(:player_two_wins)

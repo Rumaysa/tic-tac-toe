@@ -4,4 +4,3 @@ guard :rspec, cmd: 'bundle exec rspec --format documentation' do
   watch(%r{^spec/(.+)\.rb$})  { 'spec' }
   watch(%r{^lib/(.+)\.e?rb$}) { 'spec' }
 end
-

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe EvaluateBoard do
-
   let(:board_gateway) { BoardGatewayStub.new }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
 

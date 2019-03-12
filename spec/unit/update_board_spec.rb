@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe UpdateBoard do
-  
   let(:board_gateway) { BoardGatewaySpy.new(Board.new(width: 3)) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 
@@ -18,7 +17,7 @@ describe UpdateBoard do
 
     expect do
       update_board.execute('O', at_index: 7)
-    end.to raise_error(DuplicationError)
+    end.to raise_error(UpdateBoard::DuplicationError)
   end
 
   it 'cannot allow any player to mark incorrectly' do

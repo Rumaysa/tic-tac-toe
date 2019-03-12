@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 describe FindWinningCombinations do
   let(:winning_combinations) { FindWinningCombinations.new }
-  
+
   it 'can find all winning combinations for a board' do
     board = Board.new(width: 1)
     expect(winning_combinations.execute(board)).to eq([[0]])

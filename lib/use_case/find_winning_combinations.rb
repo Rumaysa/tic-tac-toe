@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FindWinningCombinations
   def execute(board)
     horizontal_winnings_for(board).union(vertical_winnings_for(board))

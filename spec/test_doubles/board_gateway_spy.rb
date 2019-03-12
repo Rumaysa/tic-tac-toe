@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BoardGatewaySpy
   attr_reader :board
 
