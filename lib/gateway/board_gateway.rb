@@ -6,7 +6,7 @@ class InMemoryBoardGateway
   end
 
   def fetch_board
-    @board
+    @board.dup
   end
 
   def update(board)

@@ -1,7 +1,5 @@
 class FindWinningCombinations
   def execute(board)
-    raise IncorrectShapeError unless square?(board)
-
     horizontal_winnings_for(board).union(vertical_winnings_for(board))
   end
 
@@ -37,11 +35,4 @@ class FindWinningCombinations
     end
     winning_combinations
   end
-
-  def square?(board)
-    (Math.sqrt(board.length) % 1).zero?
-  end
-end
-
-class IncorrectShapeError < StandardError
 end

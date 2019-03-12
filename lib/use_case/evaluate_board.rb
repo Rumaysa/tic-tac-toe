@@ -11,7 +11,7 @@ class EvaluateBoard
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6]
-  ].freeze  
+  ].freeze
 
   def initialize(board_gateway)
     @board_gateway = board_gateway

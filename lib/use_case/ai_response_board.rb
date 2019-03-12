@@ -11,7 +11,7 @@ class AIResponse
     [0, 4, 8],
     [2, 4, 6]
   ].freeze
-  
+
   def execute(board)
     if board[4].nil?
       4
@@ -25,33 +25,19 @@ class AIResponse
 
   private
 
-  def minimax(board, player)
-    empty_cell_indexes = board.map.with_index { |cell, i| i if cell.nil? }
-    scored_moves = []
-    empty_cell_indexes.each do |cell_index|
-      temp_board = board
-      temp_board[cell_index] = player
-      scored_moves << [10, cell_index] if temp_board.evaluate == :player_two_wins
-      scored_moves << [-10, cell_index] if temp_board.evaluate == :player_two_wins
-      scored_moves << [0, cell_index] if temp_board.evaluate == :game_over
-      if player == 'O'
-        scored_moves << minimax(temp_board, 'X')
-      else
-        scored_moves << minimax(temp_board, 'O')
-      end
-    end
-  end
-
   def block_opponent(board)
     ai_response = []
     WINNING_COMBINATIONS.each do |combination|
       combination.each do |index|
         ai_response << index if board[index] != 'X'
       end
-      return ai_response.first if ai_response.length == 1 && empty_cell?(ai_response.first, board)
+      if ai_response.length == 1 && empty_cell?(ai_response.first, board)
+        return ai_response.first
+      end
+
       ai_response = []
     end
-    return nil
+    nil
   end
 
   def empty_cell?(at_index, board)

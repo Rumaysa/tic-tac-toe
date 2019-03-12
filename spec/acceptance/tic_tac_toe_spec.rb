@@ -15,6 +15,7 @@ require 'test_doubles/board_gateway_stub'
 describe 'tictactoe' do
   let(:board) { Board.new(width: 3) }
   let(:board_gateway) { InMemoryBoardGateway.new(board) }
+  let(:view_board) {ViewBoard.new(board_gateway)}
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:evaluate_board) { EvaluateBoard.new(board_gateway) }
   let(:clear_board) { ClearBoard.new(board_gateway) }
@@ -94,17 +95,17 @@ describe 'tictactoe' do
   end
 
   it 'can beat the player using AI' do
-    update_board.execute('X', at_index: 0)
-    ai_choice = ai_response_board.execute(board)
-    update_board.execute('O', at_index: ai_choice)
 
-    update_board.execute('X', at_index: 1)
-    ai_choice = ai_response_board.execute(board)
-    update_board.execute('O', at_index: ai_choice)
+    def put_players_mark_at(index)
+      update_board.execute('X', at_index: index)
+      board = view_board.execute
+      ai_choice = ai_response_board.execute(board)
+      update_board.execute('O', at_index: ai_choice)
+    end
 
-    update_board.execute('X', at_index: 3)
-    ai_choice = ai_response_board.execute(board)
-    update_board.execute('O', at_index: ai_choice)
+    put_players_mark_at(0)
+    put_players_mark_at(1)
+    put_players_mark_at(3)
 
     expect(board_gateway.fetch_board).to eq(
       ['X', 'X', 'O', 'X', 'O', nil, 'O', nil, nil]

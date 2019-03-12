@@ -4,7 +4,7 @@ describe AIResponse do
   it 'can respond' do
     ai_response = AIResponse.new
 
-    board = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    board = Board.new(width: 3)
 
     expect(ai_response.execute(board)).to eq(4)
   end
