@@ -4,7 +4,7 @@ A game of tic tac toe with a command line interface. Rules followed using the [L
 
 ## Usage
 
-To run the game with the CLI:
+To run the game with the:
 
 ```bash
 $ bin/game.rb
