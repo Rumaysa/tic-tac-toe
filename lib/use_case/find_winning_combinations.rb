@@ -13,26 +13,22 @@ class FindWinningCombinations
   def horizontal_winnings_for(board)
     winning_combinations = []
 
-    i = 0
-    loop do
-      break if i >= board.length
-
-      winning_combinations << (i...i + @width).to_a
-      i += @width
+    (0...board.length).step(@width) do |index|
+      winning_combinations << (index...index + @width).to_a
     end
+
     winning_combinations
   end
 
   def vertical_winnings_for(board)
     winning_combinations = []
-    current_comumn = []
 
     @width.times do |column|
-      i = column
-      loop do
-        current_comumn << i
-        i += @width
-        winning_combinations << current_comumn; break if i >= board.length
+      current_comumn = []
+
+      (column...board.length).step(@width) do |index|
+        current_comumn << index
+        winning_combinations << current_comumn
       end
       current_comumn = []
     end

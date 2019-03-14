@@ -22,7 +22,7 @@ class AIResponse
     @winning_combinations.each do |combination|
       next if already_blocked(combination, board)
 
-      @chance_to_block << combination.select { |i| i if board[i] != 'X' }
+      @chance_to_block << combination.reject { |i| i if board[i] == 'X' }
     end
     @chance_to_block.select do |chances|
       chances if chances.length == 1
