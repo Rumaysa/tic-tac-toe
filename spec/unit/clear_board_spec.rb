@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'spec_helper'
 describe ClearBoard do
   def test_for_board(board)
     board_gateway = BoardGatewaySpy.new(board)

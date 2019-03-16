@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'spec_helper'
 
 describe UI do
   let(:ui) { UI.new(stdout: STDOUT, stdin: STDIN) }
@@ -8,7 +9,8 @@ describe UI do
   end
 
   it 'can show an empty UI board' do
-    board = Board.new(width: 3)
+    game = Game.new(width: 3)    
+    board = game.board
 
     expect(STDOUT).to receive(:puts).with("\n1|2|3\n4|5|6\n7|8|9\n\n")
     ui.display_board(board)

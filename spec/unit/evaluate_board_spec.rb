@@ -1,17 +1,19 @@
 # frozen_string_literal: true
+require 'spec_helper'
 
 describe EvaluateBoard do
+  let(:game) { Game.new(width: 3) }
   let(:board_gateway) { BoardGatewayStub.new }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
-    find_wining_combinations.execute(Board.new(width: 3))
+    find_wining_combinations.execute(game.board)
   end
   let(:evaluate_board) do
     EvaluateBoard.new(board_gateway, winning_combinations)
   end
 
   it 'continues the game until winning combination or all squares filled' do
-    board_gateway.board = Board.new(width: 3)
+    board_gateway.board = game.board
     expect(evaluate_board.execute).to eq(:continue)
   end
 

@@ -1,29 +1,30 @@
 # frozen_string_literal: true
-
+require 'spec_helper'
 describe AIResponse do
+  let(:game) { Game.new(width: 3) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
-    find_wining_combinations.execute(Board.new(width: 3))
+    find_wining_combinations.execute(game.board)
   end
   let(:ai_response) { AIResponse.new(winning_combinations) }
 
   it 'can respond' do
-    board = Board.new(width: 3)
+    game = Game.new(width: 3)
 
-    expect(ai_response.execute(board)).to eq(4)
+    expect(ai_response.execute(game.board)).to eq(4)
   end
 
   context 'when player has one mark on the board' do
     it 'can respond to a players mark when it is not in the middle' do
       board = ['X', nil, nil, nil, nil, nil, nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(4)
+      expect(ai_response.execute(game.board)).to eq(4)
     end
 
     it 'can respond to a players mark when it is in the middle' do
       board = [nil, nil, nil, nil, 'X', nil, nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(0)
+      expect(ai_response.execute(game.board)).to eq(0)
     end
   end
 
@@ -33,7 +34,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(2)
+      expect(ai_response.execute(game.board)).to eq(2)
     end
 
     it 'can block player from winning, example 2' do
@@ -41,7 +42,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(1)
+      expect(ai_response.execute(game.board)).to eq(1)
     end
 
     it 'can block player from winning, example 3' do
@@ -49,7 +50,7 @@ describe AIResponse do
                'X', 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(6)
+      expect(ai_response.execute(game.board)).to eq(6)
     end
 
     it 'can block player from winning, example 4' do
@@ -57,7 +58,7 @@ describe AIResponse do
                nil, 'O', nil,
                'X', nil, nil]
 
-      expect(ai_response.execute(board)).to eq(3)
+      expect(ai_response.execute(game.board)).to eq(3)
     end
 
     it 'can block player from winning, example 5' do
@@ -65,7 +66,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(0)
+      expect(ai_response.execute(game.board)).to eq(0)
     end
 
     it 'can block player from winning, example 6' do
@@ -73,7 +74,7 @@ describe AIResponse do
                nil, 'O', 'X',
                nil, nil, nil]
 
-      expect(ai_response.execute(board)).to eq(8)
+      expect(ai_response.execute(game.board)).to eq(8)
     end
 
     it 'can block player from winning, example 7' do
@@ -81,7 +82,7 @@ describe AIResponse do
                'X', 'O', nil,
                'X', nil, nil]
 
-      expect(ai_response.execute(board)).to eq(0)
+      expect(ai_response.execute(game.board)).to eq(0)
     end
 
     it 'can block player from winning, example 8' do
@@ -89,7 +90,7 @@ describe AIResponse do
                nil, 'O', 'X',
                nil, nil, 'X']
 
-      expect(ai_response.execute(board)).to eq(2)
+      expect(ai_response.execute(game.board)).to eq(2)
     end
 
     it 'can block player from winning, example 9' do
@@ -97,7 +98,7 @@ describe AIResponse do
                nil, 'O', nil,
                'X', 'X', nil]
 
-      expect(ai_response.execute(board)).to eq(8)
+      expect(ai_response.execute(game.board)).to eq(8)
     end
 
     it 'can block player from winning, example 10' do
@@ -105,7 +106,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, 'X', 'X']
 
-      expect(ai_response.execute(board)).to eq(6)
+      expect(ai_response.execute(game.board)).to eq(6)
     end
   end
 
@@ -115,6 +116,6 @@ describe AIResponse do
              nil, 'O', nil,
              nil, 'X', 'X']
 
-    expect(ai_response.execute(board)).to eq(6)
+    expect(ai_response.execute(game.board)).to eq(6)
   end
 end

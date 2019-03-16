@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'spec_helper'
 require 'gateway/board_gateway'
 require 'use_case/view_board'
 require 'use_case/update_board'
@@ -13,14 +13,14 @@ require 'test_doubles/board_gateway_spy'
 require 'test_doubles/board_gateway_stub'
 
 describe 'tictactoe' do
-  let(:board) { Board.new(width: 3) }
-  let(:board_gateway) { InMemoryBoardGateway.new(board) }
+  let(:game) { Game.new(width: 3) }
+  let(:board_gateway) { InMemoryBoardGateway.new(game.board) }
   let(:view_board) { ViewBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
   let(:clear_board) { ClearBoard.new(board_gateway) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
-    find_wining_combinations.execute(Board.new(width: 3))
+    find_wining_combinations.execute(game.board)
   end
   let(:ai_response_board) { AIResponse.new(winning_combinations) }
   let(:evaluate_board) do
@@ -29,8 +29,9 @@ describe 'tictactoe' do
 
   it 'can initialise an empty board' do
     expect(view_board.execute).to eq(
-      Board.new(width: 3)
+      [nil, nil, nil, nil, nil, nil, nil, nil, nil]
     )
+  
   end
 
   it 'can display the state of the board after an update' do
