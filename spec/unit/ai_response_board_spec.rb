@@ -16,13 +16,13 @@ describe AIResponse do
 
   context 'when player has one mark on the board' do
     it 'can respond to a players mark when it is not in the middle' do
-      board = ['X', nil, nil, nil, nil, nil, nil, nil, nil]
+      game.board = ['X', nil, nil, nil, nil, nil, nil, nil, nil]
 
       expect(ai_response.execute(game.board)).to eq(4)
     end
 
     it 'can respond to a players mark when it is in the middle' do
-      board = [nil, nil, nil, nil, 'X', nil, nil, nil, nil]
+      game.board = [nil, nil, nil, nil, 'X', nil, nil, nil, nil]
 
       expect(ai_response.execute(game.board)).to eq(0)
     end
@@ -30,7 +30,7 @@ describe AIResponse do
 
   context 'when and player has two marks on the board' do
     it 'can block player from winning' do
-      board = ['X', 'X', nil,
+      game.board = ['X', 'X', nil,
                nil, 'O', nil,
                nil, nil, nil]
 
@@ -38,7 +38,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 2' do
-      board = ['X', nil, 'X',
+      game.board = ['X', nil, 'X',
                nil, 'O', nil,
                nil, nil, nil]
 
@@ -46,7 +46,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 3' do
-      board = ['X', nil, nil,
+      game.board = ['X', nil, nil,
                'X', 'O', nil,
                nil, nil, nil]
 
@@ -54,7 +54,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 4' do
-      board = ['X', nil, nil,
+      game.board = ['X', nil, nil,
                nil, 'O', nil,
                'X', nil, nil]
 
@@ -62,7 +62,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 5' do
-      board = [nil, 'X', 'X',
+      game.board = [nil, 'X', 'X',
                nil, 'O', nil,
                nil, nil, nil]
 
@@ -70,7 +70,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 6' do
-      board = [nil, nil, 'X',
+      game.board = [nil, nil, 'X',
                nil, 'O', 'X',
                nil, nil, nil]
 
@@ -78,7 +78,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 7' do
-      board = [nil, nil, nil,
+      game.board = [nil, nil, nil,
                'X', 'O', nil,
                'X', nil, nil]
 
@@ -86,7 +86,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 8' do
-      board = [nil, nil, nil,
+      game.board = [nil, nil, nil,
                nil, 'O', 'X',
                nil, nil, 'X']
 
@@ -94,7 +94,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 9' do
-      board = [nil, nil, nil,
+      game.board = [nil, nil, nil,
                nil, 'O', nil,
                'X', 'X', nil]
 
@@ -102,7 +102,7 @@ describe AIResponse do
     end
 
     it 'can block player from winning, example 10' do
-      board = [nil, nil, nil,
+      game.board = [nil, nil, nil,
                nil, 'O', nil,
                nil, 'X', 'X']
 
@@ -112,7 +112,7 @@ describe AIResponse do
 
   context 'AI looks for all possible outcomes '
   it 'can play a tie' do
-    board = ['X', 'O', nil,
+    game.board = ['X', 'O', nil,
              nil, 'O', nil,
              nil, 'X', 'X']
 
