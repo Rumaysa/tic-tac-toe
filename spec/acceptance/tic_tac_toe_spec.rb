@@ -13,7 +13,7 @@ require 'test_doubles/board_gateway_spy'
 require 'test_doubles/board_gateway_stub'
 
 describe 'tictactoe' do
-  let(:game) { Game.new(width: 3) }
+  let(:game) { Game.new(board_width: 3) }
   let(:board_gateway) { InMemoryBoardGateway.new(game.board) }
   let(:view_board) { ViewBoard.new(board_gateway) }
   let(:update_board) { UpdateBoard.new(board_gateway) }

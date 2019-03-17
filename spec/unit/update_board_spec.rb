@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe UpdateBoard do
-  let(:game) { Game.new(width: 3) }
+  let(:game) { Game.new(board_width: 3) }
   let(:board_gateway) { BoardGatewaySpy.new(game.board) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 

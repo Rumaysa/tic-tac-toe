@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe EvaluateBoard do
-  let(:game) { Game.new(width: 3) }
+  let(:game) { Game.new(board_width: 3) }
   let(:board_gateway) { BoardGatewayStub.new }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do

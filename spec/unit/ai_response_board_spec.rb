@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 describe AIResponse do
-  let(:game) { Game.new(width: 3) }
+  let(:game) { Game.new(board_width: 3) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
@@ -9,7 +9,7 @@ describe AIResponse do
   let(:ai_response) { AIResponse.new(winning_combinations) }
 
   it 'can respond' do
-    game = Game.new(width: 3)
+    game = Game.new(board_width: 3)
 
     expect(ai_response.execute(game.board)).to eq(4)
   end

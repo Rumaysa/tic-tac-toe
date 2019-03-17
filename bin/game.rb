@@ -8,14 +8,14 @@ require_relative '../lib/use_case/evaluate_board'
 require_relative '../lib/gateway/board_gateway'
 require_relative '../lib/domain/board'
 
-class Game
+class TestGame
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
-    board = Board.new(width: 3)
-    @board_gateway = InMemoryBoardGateway.new(board)
+    game = Game.new(board_width: 3)
+    @board_gateway = InMemoryBoardGateway.new(game.board)
     @view_board = ViewBoard.new(@board_gateway)
-    @evaluate_board = EvaluateBoard.new(@board_gateway)
+    @evaluate_board = EvaluateBoard.new(@board_gateway, game.board)
     @update_board = UpdateBoard.new(@board_gateway)
   end
 
@@ -28,7 +28,7 @@ class Game
         place_players_mark
       rescue RangeError
         exception_message("\nPlease choose a valid mark\n")
-      rescue DuplicationError
+      rescue UpdateBoard::DuplicationError
         exception_message("\nPlease choose an empty cell\n")
       else
         display_current_board
@@ -71,5 +71,5 @@ class Game
   end
 end
 
-game = Game.new
+game = TestGame.new
 game.execute

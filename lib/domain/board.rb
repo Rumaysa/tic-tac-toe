@@ -2,8 +2,8 @@
 
 class Game
   attr_accessor :board
-  def initialize(width:)
-    size = width * width
+  def initialize(board_width:)
+    size = board_width * board_width
     @board = Array.new(size)
   end
 end
