@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class Board < Array
-  def initialize(size:)
-    size.times { push(nil) }
+class Game
+  attr_accessor :board
+  def initialize(board_width:)
+    size = board_width * board_width
+    @board = Array.new(size)
   end
 end

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-class FetchBoard
-  attr_reader :state
-
+class ViewBoard
   def initialize(board_gateway)
     @board_gateway = board_gateway
-    @state = []
   end
 
   def execute

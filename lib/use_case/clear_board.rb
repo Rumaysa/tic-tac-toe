@@ -8,5 +8,6 @@ class ClearBoard
   def execute
     board = @board_gateway.fetch_board
     board.map! { nil }
+    @board_gateway.update(board)
   end
 end

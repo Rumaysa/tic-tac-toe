@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-class InMemoryBoardGateway
+class BoardGatewaySpy
+  attr_reader :board
+
   def initialize(board)
     @board = board
   end
 
   def fetch_board
-    @board.dup
+    @board
   end
 
   def update(board)

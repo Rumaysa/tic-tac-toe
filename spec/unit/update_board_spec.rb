@@ -1,23 +1,9 @@
 # frozen_string_literal: true
+require 'spec_helper'
 
 describe UpdateBoard do
-  class BoardGatewaySpy
-    attr_reader :board
-
-    def initialize
-      @board = Array.new(9, nil)
-    end
-
-    def fetch_board
-      @board
-    end
-
-    def update(player, at_index)
-      @board[at_index] = player
-    end
-  end
-
-  let(:board_gateway) { BoardGatewaySpy.new }
+  let(:game) { Game.new(board_width: 3) }
+  let(:board_gateway) { BoardGatewaySpy.new(game.board) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 
   it 'can update the board with players mark' do
@@ -33,7 +19,7 @@ describe UpdateBoard do
 
     expect do
       update_board.execute('O', at_index: 7)
-    end.to raise_error(DuplicationError)
+    end.to raise_error(UpdateBoard::DuplicationError)
   end
 
   it 'cannot allow any player to mark incorrectly' do

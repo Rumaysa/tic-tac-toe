@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 class UI
   def initialize(stdout:, stdin:)
     @stdout = stdout
@@ -29,7 +31,7 @@ class UI
 
   def interpret_game_status(status)
     case status
-    when :player_one_wins 
+    when :player_one_wins
       "Player one wins\n"
     when :player_two_wins
       "Player two wins\n"
@@ -48,4 +50,3 @@ class UI
     "\e[#{color_code}m\e[1m#{mark}\e[0m"
   end
 end
-
