@@ -31,7 +31,6 @@ describe 'tictactoe' do
     expect(view_board.execute).to eq(
       [nil, nil, nil, nil, nil, nil, nil, nil, nil]
     )
-  
   end
 
   it 'can display the state of the board after an update' do
@@ -50,7 +49,8 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 6)
     update_board.execute('X', at_index: 0)
 
-    expect(evaluate_board.execute).to eq(:player_one_wins)
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:player_one_wins)
 
     clear_board.execute
 
@@ -60,7 +60,8 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 0)
 
-    expect(evaluate_board.execute).to eq(:player_two_wins)
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:player_two_wins)
 
     clear_board.execute
 
@@ -70,7 +71,7 @@ describe 'tictactoe' do
     update_board.execute('X', at_index: 6)
     update_board.execute('O', at_index: 5)
 
-    expect(evaluate_board.execute).to eq(:player_two_wins)
+    expect(response[:outcome]).to eq(:player_two_wins)
   end
 
   it 'can display the outcome of two full games' do
@@ -84,7 +85,8 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 7)
     update_board.execute('O', at_index: 8)
 
-    expect(evaluate_board.execute).to eq(:game_over)
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:game_over)
 
     clear_board.execute
 
@@ -98,7 +100,8 @@ describe 'tictactoe' do
     update_board.execute('O', at_index: 8)
     update_board.execute('X', at_index: 2)
 
-    expect(evaluate_board.execute).to eq(:player_one_wins)
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:player_one_wins)
   end
 
   it 'can beat the player using AI' do
@@ -116,6 +119,7 @@ describe 'tictactoe' do
     expect(view_board.execute).to eq(
       ['X', 'X', 'O', 'X', 'O', nil, 'O', nil, nil]
     )
-    expect(evaluate_board.execute).to eq(:player_two_wins)
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:player_two_wins)
   end
 end

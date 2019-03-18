@@ -15,17 +15,22 @@ class EvaluateBoard
     ]
   end
 
-  def execute
-    return :player_one_wins if win_for_player?('X')
-    return :player_two_wins if win_for_player?('O')
-    return :game_over if game_over?
+  def execute(*)
 
-    :continue
+    outcome = :continue
+
+    outcome = :game_over if full_board?
+    outcome = :player_one_wins if win_for_player?('X')
+    outcome = :player_two_wins if win_for_player?('O')
+
+    {
+      outcome: outcome
+    }
   end
 
   private
 
-  def game_over?
+  def full_board?
     board = @board_gateway.fetch_board
     return false if board.nil?
 
