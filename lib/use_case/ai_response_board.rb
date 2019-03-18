@@ -7,38 +7,17 @@ class AIResponse
   end
 
   def execute(*)
-    board = @board_gateway.fetch_board
-    if board[4].nil?
-      4 
-    else
-      block_opponent(board)
-    end
+    return 4
   end
 
   private
-
-  def block_opponent(board)
-    @chance_to_block = []
-    @winning_combinations.each do |combination|
-      next if already_blocked(combination, board)
-
-      @chance_to_block << combination.reject { |i| i if board[i] == 'X' }
-    end
-    @chance_to_block.select do |chances|
-      chances if chances.length == 1
-    end.first.first
-  end
-
-  def already_blocked(combination, board)
-    combination.any? { |i| board[i] == 'O' }
-  end
 
   def minimax(board, player = 'O')
     possible_moves = board.map.with_index { |move, i| i if move.nil? }
     possible_moves.each do | position |
       board[position] = player
       player = player == 'O' ? 'X' : 'O'
-    
+    end
   end
 
   def minimax_idea(board, player)
@@ -58,5 +37,20 @@ class AIResponse
                       end
     end
   end
+
+  def block_opponent(board)
+    @chance_to_block = []
+    @winning_combinations.each do |combination|
+      next if already_blocked(combination, board)
+
+      @chance_to_block << combination.reject { |i| i if board[i] == 'X' }
+    end
+    @chance_to_block.select do |chances|
+      chances if chances.length == 1
+    end.first.first
+  end
+
+  def already_blocked(combination, board)
+    combination.any? { |i| board[i] == 'O' }
+  end
 end
-end 
