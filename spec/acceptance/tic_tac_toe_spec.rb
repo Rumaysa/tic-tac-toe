@@ -122,4 +122,22 @@ describe 'tictactoe' do
     response = evaluate_board.execute({})
     expect(response[:outcome]).to eq(:player_two_wins)
   end
+
+  it 'can beat the player using AI' do
+    def put_players_mark_at(index)
+      update_board.execute('X', at_index: index)
+      board = view_board.execute
+      ai_choice = ai_response_board.execute(board)
+      puts "AI response:#{ai_choice} "
+      update_board.execute('O', at_index: ai_choice)
+    end
+
+    put_players_mark_at(4)
+
+    expect(view_board.execute).to eq(
+      ['X', 'X', 'O', 'X', 'O', nil, 'O', nil, nil]
+    )
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:player_two_wins)
+  end
 end
