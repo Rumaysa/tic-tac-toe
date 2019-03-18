@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 describe AIResponse do
   let(:game) { Game.new(board_width: 3) }
-  let(:board_gateway) { InMemoryBoardGateway.new(game.board) }
+  let(:board_gateway) { InMemoryBoardGateway.new(game) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
-  let(:ai_response) { AIResponse.new(board_gateway, winning_combinations) }
+  let(:ai_response) { AIResponse.new( board_gateway, winning_combinations) }
 
-  it 'can respond' do
+  xit 'can respond' do
     expect(ai_response.execute).to eq(4)
   end
 
@@ -119,6 +119,36 @@ describe AIResponse do
   # end
 
   context 'when implementing minimax' do
+    it 'can pick the winning move from two available moves' do
+      game.board = ['X', 'X', 'O',
+                    'O', 'O', 'X',
+                     nil, 'X', nil]
+      board_gateway.update(game)
+      expect(ai_response.execute).to eq(6)
+    end
 
-  end 
+    it 'can pick the winning move from two other available moves' do
+      game.board = [nil, 'O', 'O',
+                    'X', 'X', 'O',
+                     nil, 'X', 'X']
+      board_gateway.update(game)
+      expect(ai_response.execute).to eq(0)
+    end
+
+    it 'can pick the winning move from four available moves' do
+      game.board = ['X', 'O', nil,
+                    'O', 'X', 'X',
+                     nil, nil, nil]
+      board_gateway.update(game)
+      expect(ai_response.execute).to eq(8)
+    end
+
+    it 'can pick the winning move from six available moves' do
+      game.board = [nil, 'X', 'X',
+                    nil, 'O', nil,
+                    nil, nil, nil]
+      board_gateway.update(game)
+      expect(ai_response.execute).to eq(0)
+    end
+  end
 end
