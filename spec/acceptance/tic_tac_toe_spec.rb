@@ -22,7 +22,9 @@ describe 'tictactoe' do
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
-  let(:ai_response_board) { AIResponse.new(winning_combinations) }
+  let(:ai_response_board) do
+    AIResponse.new(board_gateway, winning_combinations)
+  end
   let(:evaluate_board) do
     EvaluateBoard.new(board_gateway, winning_combinations)
   end
@@ -107,8 +109,7 @@ describe 'tictactoe' do
   it 'can beat the player using AI' do
     def put_players_mark_at(index)
       update_board.execute('X', at_index: index)
-      board = view_board.execute
-      ai_choice = ai_response_board.execute(board)
+      ai_choice = ai_response_board.execute
       update_board.execute('O', at_index: ai_choice)
     end
 

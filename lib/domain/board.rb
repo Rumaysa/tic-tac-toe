@@ -6,4 +6,6 @@ class Game
     size = board_width * board_width
     @board = Array.new(size)
   end
+
+  
 end

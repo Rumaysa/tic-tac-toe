@@ -2,29 +2,28 @@
 require 'spec_helper'
 describe AIResponse do
   let(:game) { Game.new(board_width: 3) }
+  let(:board_gateway) { InMemoryBoardGateway.new(game.board) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
-  let(:ai_response) { AIResponse.new(winning_combinations) }
+  let(:ai_response) { AIResponse.new(board_gateway, winning_combinations) }
 
   it 'can respond' do
-    game = Game.new(board_width: 3)
-
-    expect(ai_response.execute(game.board)).to eq(4)
+    expect(ai_response.execute).to eq(4)
   end
 
   context 'when player has one mark on the board' do
     it 'can respond to a players mark when it is not in the middle' do
       game.board = ['X', nil, nil, nil, nil, nil, nil, nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(4)
+      expect(ai_response.execute).to eq(4)
     end
 
     it 'can respond to a players mark when it is in the middle' do
       game.board = [nil, nil, nil, nil, 'X', nil, nil, nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(0)
+      expect(ai_response.execute).to eq(0)
     end
   end
 
@@ -50,7 +49,7 @@ describe AIResponse do
                'X', 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(6)
+      expect(ai_response.execute.to eq(6)
     end
 
     it 'can block player from winning, example 4' do
@@ -58,7 +57,7 @@ describe AIResponse do
                nil, 'O', nil,
                'X', nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(3)
+      expect(ai_response.execute).to eq(3)
     end
 
     it 'can block player from winning, example 5' do
@@ -66,7 +65,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(0)
+      expect(ai_response.execute).to eq(0)
     end
 
     it 'can block player from winning, example 6' do
@@ -74,7 +73,7 @@ describe AIResponse do
                nil, 'O', 'X',
                nil, nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(8)
+      expect(ai_response.execute).to eq(8)
     end
 
     it 'can block player from winning, example 7' do
@@ -82,7 +81,7 @@ describe AIResponse do
                'X', 'O', nil,
                'X', nil, nil]
 
-      expect(ai_response.execute(game.board)).to eq(0)
+      expect(ai_response.execute).to eq(0)
     end
 
     it 'can block player from winning, example 8' do
@@ -90,7 +89,7 @@ describe AIResponse do
                nil, 'O', 'X',
                nil, nil, 'X']
 
-      expect(ai_response.execute(game.board)).to eq(2)
+      expect(ai_response.execute).to eq(2)
     end
 
     it 'can block player from winning, example 9' do
@@ -98,7 +97,7 @@ describe AIResponse do
                nil, 'O', nil,
                'X', 'X', nil]
 
-      expect(ai_response.execute(game.board)).to eq(8)
+      expect(ai_response.execute).to eq(8)
     end
 
     it 'can block player from winning, example 10' do
@@ -106,7 +105,7 @@ describe AIResponse do
                nil, 'O', nil,
                nil, 'X', 'X']
 
-      expect(ai_response.execute(game.board)).to eq(6)
+      expect(ai_response.execute).to eq(6)
     end
   end
 

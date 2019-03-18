@@ -1,12 +1,18 @@
 # frozen_string_literal: true
 
 class AIResponse
-  def initialize(winning_combinations)
+  def initialize(board_gateway, winning_combinations)
+    @board_gateway = board_gateway
     @winning_combinations = winning_combinations
   end
 
-  def execute(board)
-    minimax(board)
+  def execute(*)
+    board = @board_gateway.fetch_board
+    if board[4].nil?
+      4 
+    else
+      block_opponent(board)
+    end
   end
 
   private
@@ -23,8 +29,12 @@ class AIResponse
     end.first.first
   end
 
+  def already_blocked(combination, board)
+    combination.any? { |i| board[i] == 'O' }
+  end
+
   def minimax(board, player = 'O')
-    possible_moves = board.map.with_index { |move, i| i if cell.nil? }
+    possible_moves = board.map.with_index { |move, i| i if move.nil? }
     possible_moves.each do | position |
       board[position] = player
       player = player == 'O' ? 'X' : 'O'
@@ -47,10 +57,6 @@ class AIResponse
                         minimax(temp_board, 'O')
                       end
     end
-  end
-
-  def already_blocked(combination, board)
-    combination.any? { |i| board[i] == 'O' }
   end
 end
 end 
