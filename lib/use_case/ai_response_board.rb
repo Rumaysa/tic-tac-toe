@@ -61,12 +61,9 @@ class AIResponse
     empty_cell_indexes = game.board.each_index.select do |i|
       game.board[i].nil?
     end
-
-    puts "ARRAY OF: #{empty_cell_indexes.inspect}"
     scored_moves = []
 
     empty_cell_indexes.each do |cell_index|
-      puts "cell index is #{cell_index.inspect}"
       temp_game = Game.new(board_width: 3)
       temp_game.board = game.board.dup
       temp_game.board[cell_index] = player
@@ -77,12 +74,8 @@ class AIResponse
       end
       scored_moves << [score, cell_index]
     end
-    puts "SCORED MOVES #{scored_moves.inspect}"
-    if player == 'O'
-      scored_moves.max
-    else
-      scored_moves.min
-    end
+
+    player == 'O' ? scored_moves.max : scored_moves.min
   end
 
   def score(game)
