@@ -5,6 +5,7 @@ require_relative '../lib/use_case/view_board'
 require_relative '../lib/ui_board'
 require_relative '../lib/use_case/update_board'
 require_relative '../lib/use_case/evaluate_board'
+require_relative '../lib/use_case/find_winning_combinations'
 require_relative '../lib/gateway/board_gateway'
 require_relative '../lib/domain/board'
 
@@ -15,14 +16,17 @@ class TestGame
     game = Game.new(board_width: 3)
     @board_gateway = InMemoryBoardGateway.new(game.board)
     @view_board = ViewBoard.new(@board_gateway)
-    @evaluate_board = EvaluateBoard.new(@board_gateway, game.board)
+    find_winning_combinations = FindWinningCombinations.new
+    winning_combinations = find_winning_combinations.execute(game.board)
+
+    @evaluate_board = EvaluateBoard.new(@board_gateway, winning_combinations)
     @update_board = UpdateBoard.new(@board_gateway)
   end
 
   def execute
     @game_ui.start
     display_current_board
-    while @evaluate_board.execute == :continue
+    while @evaluate_board.execute[:outcome] == :continue
       prompt_player_to_place_mark
       begin
         place_players_mark
@@ -65,7 +69,7 @@ class TestGame
   end
 
   def display_outcome
-    game_status = @evaluate_board.execute
+    game_status = @evaluate_board.execute[:outcome]
     outcome = @game_ui.interpret_game_status(game_status)
     @game_ui.display_message(outcome)
   end
