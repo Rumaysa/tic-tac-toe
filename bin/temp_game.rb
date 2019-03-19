@@ -5,24 +5,20 @@ require_relative '../lib/use_case/view_board'
 require_relative '../lib/ui_board'
 require_relative '../lib/use_case/update_board'
 require_relative '../lib/use_case/evaluate_board'
-require_relative '../lib/use_case/find_winning_combinations'
 require_relative '../lib/use_case/ai_response_board'
-require_relative '../lib/gateway/board_gateway'
-require_relative '../lib/domain/board'
+require_relative '../lib/gateway/game_gateway'
+require_relative '../lib/domain/game'
 
 class TestGame
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
     game = Game.new(board_width: 3)
-    @board_gateway = InMemoryBoardGateway.new(game.board)
-    @board_gateway_hack = InMemoryBoardGateway.new(game)
-    @view_board = ViewBoard.new(@board_gateway)
-    find_winning_combinations = FindWinningCombinations.new
-    winning_combinations = find_winning_combinations.execute(game.board)
-    @evaluate_board = EvaluateBoard.new(@board_gateway, winning_combinations)
-    @minimax_ai = AIResponse.new(@board_gateway_hack, winning_combinations)
-    @update_board = UpdateBoard.new(@board_gateway)
+    @game_gateway = InMemoryGameGateway.new(game)
+    @view_board = ViewBoard.new(@game_gateway)
+    @evaluate_board = EvaluateBoard.new(@game_gateway)
+    @minimax_ai = AIResponse.new(@game_gateway)
+    @update_board = UpdateBoard.new(@game_gateway)
   end
 
   def execute
@@ -48,7 +44,7 @@ class TestGame
   private
 
   def place_ai_mark
-    puts "board is: #{@board_gateway_hack.fetch_board.board}"
+    puts "board is: #{@game_gateway.fetch_game.board}"
     ai_choice = @minimax_ai.execute
     puts "AI CHOICE #{ai_choice}"
     @update_board.execute(@active_player, at_index: ai_choice)
