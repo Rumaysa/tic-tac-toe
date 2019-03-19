@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class EvaluateBoard
-  def initialize(board_gateway, winning_combinations)
-    @board_gateway = board_gateway
+  def initialize(game_gateway, winning_combinations)
+    @game_gateway = game_gateway
     @winning_combinations = winning_combinations
   end
 
@@ -22,14 +22,16 @@ class EvaluateBoard
   private
 
   def full_board?
-    board = @board_gateway.fetch_board
+    game = @game_gateway.fetch_game
+    board = game.board
     return false if board.nil?
 
     board.compact.length == 9
   end
 
   def win_for_player?(player)
-    board = @board_gateway.fetch_board
+    game = @game_gateway.fetch_game
+    board = game.board
 
     players_marks = []
     board.each_with_index { |cell, i| players_marks << i if cell == player }

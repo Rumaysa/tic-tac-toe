@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ViewBoard
-  def initialize(board_gateway)
-    @board_gateway = board_gateway
+  def initialize(game_gateway)
+    @game_gateway = game_gateway
   end
 
   def execute
-    @board_gateway.fetch_board
+    game = @game_gateway.fetch_game
+    game.board
   end
 end

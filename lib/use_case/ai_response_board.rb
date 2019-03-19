@@ -1,55 +1,15 @@
 # frozen_string_literal: true
 
 class AIResponse
-  def initialize(board_gateway, winning_combinations)
-    @board_gateway = board_gateway
+  def initialize(game_gateway, winning_combinations)
+    @game_gateway = game_gateway
     @winning_combinations = winning_combinations
   end
 
   def execute(*)
-    game = @board_gateway.fetch_board
+    game = @game_gateway.fetch_game
     min_max(game)[1]
   end
-
-  # def minimax(game, player = 'O')
-  #   possible_moves = []
-  #   game.board.each_with_index do |move, index|
-  #     possible_moves << index if move.nil?
-  #   end
-  #   score = []
-  #   possible_moves.each do |move|
-  #     temp_game = Game.new(board_width: 3)
-  #     temp_game.board = game.board.dup
-  #     temp_game.board[move] = player
-  #     if temp_game.board.compact.length <= 3
-  #       possible_moves = []
-  #       temp_game.board.each_with_index do |move, index|
-  #         possible_moves << index if move.nil?
-  #       end
-  #       player = player == 'O' ? 'X' : 'O'
-  #       possible_moves.each do |move|
-  #         temp_game = Game.new(board_width: 3)
-  #         temp_game.board = game.board.dup
-  #         temp_game.board[move] = player
-  #         if temp_game.evaluate == :player_one_wins
-  #           score << [-1, move]
-  #         elsif temp_game.evaluate == :player_two_wins
-  #           score << [+1, move]
-  #         else
-  #           score << [0, move]
-  #         end
-  #       end
-  #     end
-  #     if temp_game.evaluate == :player_one_wins
-  #       score << [-1, move]
-  #     elsif temp_game.evaluate == :player_two_wins
-  #       score << [+1, move]
-  #     else
-  #       score << [0, move]
-  #     end
-  #   end
-  #   score.max[1]
-  # end
 
   private
 
