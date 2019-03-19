@@ -12,7 +12,7 @@ class UI
   end
 
   def display_board(board)
-    new_board = "\n1|2|3\n4|5|6\n7|8|9\n\n"
+    new_board = "\n1 |2 |3 |4 \n5 |6 |7 |8 \n9 |10|11|12\n13|14|15|16\n\n"
     board.each_with_index do |cell, i|
       new_board.gsub!((i + 1).to_s, cell) unless cell.nil?
     end
