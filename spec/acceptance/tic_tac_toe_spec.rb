@@ -6,9 +6,8 @@ require 'use_case/update_board'
 require 'use_case/evaluate_board'
 require 'use_case/clear_board'
 require 'use_case/ai_response_board'
-require 'use_case/find_winning_combinations'
 require 'ui_board'
-require 'domain/board'
+require 'domain/game'
 require 'test_doubles/game_gateway_spy'
 require 'test_doubles/game_gateway_stub'
 
@@ -18,15 +17,11 @@ describe 'tictactoe' do
   let(:view_board) { ViewBoard.new(game_gateway) }
   let(:update_board) { UpdateBoard.new(game_gateway) }
   let(:clear_board) { ClearBoard.new(game_gateway) }
-  let(:find_wining_combinations) { FindWinningCombinations.new }
-  let(:winning_combinations) do
-    find_wining_combinations.execute(game.board)
-  end
   let(:ai_response_board) do
-    AIResponse.new(game_gateway, winning_combinations)
+    AIResponse.new(game_gateway)
   end
   let(:evaluate_board) do
-    EvaluateBoard.new(game_gateway, winning_combinations)
+    EvaluateBoard.new(game_gateway)
   end
 
   it 'can initialise an empty board' do

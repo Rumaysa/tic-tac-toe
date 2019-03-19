@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class AIResponse
-  def initialize(game_gateway, winning_combinations)
+  def initialize(game_gateway)
     @game_gateway = game_gateway
-    @winning_combinations = winning_combinations
   end
 
   def execute(*)
@@ -14,9 +13,9 @@ class AIResponse
   private
 
   def min_max(game, player = 'O')
-    return [score(game), nil] if game.evaluate == :game_over
-    return [score(game), nil] if game.evaluate == :player_one_wins
-    return [score(game), nil] if game.evaluate == :player_two_wins
+    return [score(game), nil] if game.full_board?
+    return [score(game), nil] if game.win_for_player?('X')
+    return [score(game), nil] if game.win_for_player?('O')
 
     empty_cell_indexes = game.board.each_index.select do |i|
       game.board[i].nil?
@@ -39,8 +38,10 @@ class AIResponse
   end
 
   def score(game)
-    return 0 if game.evaluate == :game_over
-    return -10 if game.evaluate == :player_one_wins
-    return +10 if game.evaluate == :player_two_wins
+    return 0 if game.full_board?
+    return -10 if game.win_for_player?('X')
+    return +10 if game.win_for_player?('O')
   end
+
+  
 end

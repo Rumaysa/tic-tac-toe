@@ -6,7 +6,7 @@ describe AIResponse do
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
-  let(:ai_response) { AIResponse.new(game_gateway, winning_combinations) }
+  let(:ai_response) { AIResponse.new(game_gateway) }
 
   it 'can respond' do
     game_gateway.update(game)

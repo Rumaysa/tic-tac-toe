@@ -4,12 +4,8 @@ require 'spec_helper'
 describe EvaluateBoard do
   let(:game) { Game.new(board_width: 3) }
   let(:game_gateway) { GameGatewayStub.new }
-  let(:find_wining_combinations) { FindWinningCombinations.new }
-  let(:winning_combinations) do
-    find_wining_combinations.execute(game.board)
-  end
   let(:evaluate_board) do
-    EvaluateBoard.new(game_gateway, winning_combinations)
+    EvaluateBoard.new(game_gateway)
   end
 
   it 'continues the game until winning combination or all squares filled' do
