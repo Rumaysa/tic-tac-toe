@@ -32,6 +32,7 @@ class AIResponse
         score = min_max(temp_game, 'O')[0]
       end
       scored_moves << [score, cell_index]
+      puts "scored moves: #{scored_moves}"
     end
 
     player == 'O' ? scored_moves.max : scored_moves.min

@@ -8,7 +8,7 @@ describe AIResponse do
   end
   let(:ai_response) { AIResponse.new(game_gateway) }
 
-  it 'can respond' do
+  xit 'can respond' do
     game_gateway.update(game)
     expect(ai_response.execute).to eq(8)
   end
@@ -167,6 +167,15 @@ describe AIResponse do
                     nil, nil, nil]
       game_gateway.update(game)
       expect(ai_response.execute).to eq(0)
+    end
+
+    it 'can pick the winning move from two available moves', focus: true do
+      game = game_gateway.fetch_game
+      game.board = ['X', 'X', 'O',
+                    nil, 'O', nil,
+                    'X', 'O', 'X']
+      game_gateway.update(game)
+      expect(ai_response.execute).to eq(3)
     end
   end
 end
