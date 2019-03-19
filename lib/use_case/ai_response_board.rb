@@ -5,14 +5,14 @@ class AIResponse
     @game_gateway = game_gateway
   end
 
-  def execute(active_player:)
+  def execute(active_player = 'O')
     game = @game_gateway.fetch_game
     min_max(game, active_player)[1]
   end
 
   private
 
-  def min_max(game, player = 'O')
+  def min_max(game, player)
     return [score(game), nil] if game.full_board?
     return [score(game), nil] if game.win_for_player?('X')
     return [score(game), nil] if game.win_for_player?('O')
@@ -32,7 +32,6 @@ class AIResponse
         score = min_max(temp_game, 'O')[0]
       end
       scored_moves << [score, cell_index]
-      # puts "scored moves: #{scored_moves}"
     end
 
     player == 'O' ? scored_moves.max : scored_moves.min
@@ -43,6 +42,4 @@ class AIResponse
     return +10 if game.win_for_player?('O')
     return 0 if game.full_board?
   end
-
-  
 end
