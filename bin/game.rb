@@ -31,7 +31,6 @@ class TestGame
     while @evaluate_board.execute[:outcome] == :continue
       prompt_player_to_place_mark
       begin
-        sleep 0.2
         @active_player == 'X' ? place_players_mark : place_ai_mark
         # place_ai_mark
       rescue RangeError
@@ -49,6 +48,7 @@ class TestGame
   private
 
   def place_ai_mark
+    puts "board is: #{@board_gateway_hack.fetch_board.board}"
     ai_choice = @minimax_ai.execute
     puts "AI CHOICE #{ai_choice}"
     @update_board.execute(@active_player, at_index: ai_choice)
