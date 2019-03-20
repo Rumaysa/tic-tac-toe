@@ -23,7 +23,7 @@ class AIResponse
     scored_moves = []
 
     empty_cell_indexes.each do |cell_index|
-      temp_game = Game.new(board_width: 4)
+      temp_game = Game.new(board_width: 3)
       temp_game.board = game.board.dup
       temp_game.board[cell_index] = player
       score = if player == 'O'

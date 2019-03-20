@@ -14,169 +14,161 @@ describe AIResponse do
     expect(ai_response.execute).to eq(8)
   end
 
+  def expected_AI_response(board, response)
+    game = game_gateway.fetch_game
+    game.board = board
+    game_gateway.update(game)
+    expect(ai_response.execute).to eq(response)
+  end
   context 'when player has one mark on the board' do
     it 'can respond to a players mark when it is not in the middle' do
-      game = game_gateway.fetch_game
-      game.board = ['X', nil, nil, nil, nil, nil, nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(4)
+      expected_AI_response(
+        ['X', nil, nil,
+         nil, nil, nil,
+         nil, nil, nil], 4
+      )
     end
 
     it 'can respond to a players mark when it is in the middle' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, nil, nil, 'X', nil, nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(8)
+      expected_AI_response(
+        [nil, nil, nil,
+         nil, 'X', nil,
+         nil, nil, nil], 8
+      )
     end
   end
 
   context 'when and player has two marks on the board' do
-    it 'can block player from winning' do
-      game = game_gateway.fetch_game
-      game.board = ['X', 'X', nil,
-                    nil, 'O', nil,
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute(game.board)).to eq(2)
+    it 'can block player from winning horizontally' do
+      expected_AI_response(
+        ['X', 'X', nil,
+         nil, 'O', nil,
+         nil, nil, nil], 2
+      )
     end
 
-    it 'can block player from winning, example 2' do
-      game = game_gateway.fetch_game
-      game.board = ['X', nil, 'X',
-                    nil, 'O', nil,
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute(game.board)).to eq(1)
+    it 'can block player from winning horizontally, example 2' do
+      expected_AI_response(
+        ['X', nil, 'X',
+         nil, 'O', nil,
+         nil, nil, nil], 1
+      )
+    end
+    it 'can block player from winning horizonatally, example 3' do
+      expected_AI_response(
+        [nil, 'X', 'X',
+         nil, 'O', nil,
+         nil, nil, nil], 0
+      )
     end
 
-    it 'can block player from winning, example 3' do
-      game = game_gateway.fetch_game
-      game.board = ['X', nil, nil,
-                    'X', 'O', nil,
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(6)
+
+    it 'can block player from winning horizontally, example 4' do
+      expected_AI_response(
+        [nil, nil, nil,
+         nil, 'O', nil,
+         'X', 'X', nil], 8
+      )
     end
 
-    it 'can block player from winning, example 4' do
-      game = game_gateway.fetch_game
-      game.board = ['X', nil, nil,
-                    nil, 'O', nil,
-                    'X', nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(3)
+    it 'can block player from winning horizontally, example 5' do
+      expected_AI_response(
+        [nil, nil, nil,
+         nil, 'O', nil,
+         nil, 'X', 'X'], 6
+      )
     end
 
-    it 'can block player from winning, example 5' do
-      game = game_gateway.fetch_game
-      game.board = [nil, 'X', 'X',
-                    nil, 'O', nil,
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(0)
+    it 'can block player from winning vertically' do
+      expected_AI_response(
+        ['X', nil, nil,
+         'X', 'O', nil,
+         nil, nil, nil], 6
+      )
     end
 
-    it 'can block player from winning, example 6' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, 'X',
-                    nil, 'O', 'X',
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(8)
+    it 'can block player from winning vertically, example 2' do
+      expected_AI_response(
+        ['X', nil, nil,
+         nil, 'O', nil,
+         'X', nil, nil], 3
+      )
     end
 
-    it 'can block player from winning, example 7' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, nil,
-                    'X', 'O', nil,
-                    'X', nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(0)
+    it 'can block player from winning vertically, example 3' do
+      expected_AI_response(
+        [nil, nil, 'X',
+         nil, 'O', 'X',
+         nil, nil, nil], 8
+      )
     end
 
-    it 'can block player from winning, example 8' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, nil,
-                    nil, 'O', 'X',
-                    nil, nil, 'X']
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(2)
+    it 'can block player from winning vertically, example 4' do
+      expected_AI_response(
+        [nil, nil, nil,
+         'X', 'O', nil,
+         'X', nil, nil], 0
+      )
     end
 
-    it 'can block player from winning, example 9' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, nil,
-                    nil, 'O', nil,
-                    'X', 'X', nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(8)
-    end
-
-    it 'can block player from winning, example 10' do
-      game = game_gateway.fetch_game
-      game.board = [nil, nil, nil,
-                    nil, 'O', nil,
-                    nil, 'X', 'X']
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(6)
+    it 'can block player from winning vertically, example 5' do
+      expected_AI_response(
+        [nil, nil, nil,
+         nil, 'O', 'X',
+         nil, nil, 'X'], 2
+      )
     end
   end
 
   context 'AI looks for all possible outcomes ' do
     it 'can play a tie' do
-      game = game_gateway.fetch_game
-      game.board = ['X', 'O', nil,
-                    nil, 'O', nil,
-                    nil, 'X', 'X']
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(6)
+      expected_AI_response(
+        ['X', 'O', nil,
+         nil, 'O', nil,
+         nil, 'X', 'X'], 6
+      )
     end
   end
 
-  context 'when implementing minimax' do
+  context 'when AI considers future moves' do
     it 'can pick the winning move from two available moves' do
-      game = game_gateway.fetch_game
-      game.board = ['X', 'X', 'O',
-                    'O', 'O', 'X',
-                    nil, 'X', nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(6)
+      expected_AI_response(
+        ['X', 'X', 'O',
+         'O', 'O', 'X',
+         nil, 'X', nil], 6
+      )
     end
 
-    it 'can pick the winning move from two other available moves' do
-      game = game_gateway.fetch_game
-      game.board = [nil, 'O', 'O',
-                    'X', 'X', 'O',
-                    nil, 'X', 'X']
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(0)
+    it 'can pick the winning move from two available moves, example 2' do
+      expected_AI_response(
+        [nil, 'O', 'O',
+         'X', 'X', 'O',
+         nil, 'X', 'X'], 0
+      )
+    end
+
+    it 'can pick the winning move from two available moves, example 3' do
+      expected_AI_response(
+        ['X', 'X', 'O',
+         nil, 'O', nil,
+         'X', 'O', 'X'], 3
+      )
     end
 
     it 'can pick the winning move from four available moves' do
-      game = game_gateway.fetch_game
-      game.board = ['X', 'O', nil,
-                    'O', 'X', 'X',
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(8)
-    end
+      expected_AI_response(
+        ['X', 'O', nil,
+         'O', 'X', 'X',
+         nil, nil, nil], 8
+      )
+    end 
 
     it 'can pick the winning move from six available moves' do
-      game = game_gateway.fetch_game
-      game.board = [nil, 'X', 'X',
-                    nil, 'O', nil,
-                    nil, nil, nil]
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(0)
-    end
-
-    it 'can pick the winning move from two available moves' do
-      game = game_gateway.fetch_game
-      game.board = ['X', 'X', 'O',
-                    nil, 'O', nil,
-                    'X', 'O', 'X']
-      game_gateway.update(game)
-      expect(ai_response.execute).to eq(3)
+      expected_AI_response(
+        [nil, 'X', 'X',
+         nil, 'O', nil,
+         nil, nil, nil], 0
+      )
     end
   end
 end

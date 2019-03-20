@@ -119,4 +119,20 @@ describe 'tictactoe' do
     response = evaluate_board.execute({})
     expect(response[:outcome]).to eq(:player_two_wins)
   end
+
+  it 'cannot lose a game using AI' do
+    def ai_place_mark(mark)
+      ai_choice = ai_response_board.execute(mark)
+      update_board.execute(mark, at_index: ai_choice)
+    end
+
+    4.times do
+      ai_place_mark('X')
+      ai_place_mark('O')
+    end
+    ai_place_mark('X')
+
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:game_over)
+  end
 end

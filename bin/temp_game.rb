@@ -13,7 +13,7 @@ class TestGame
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
-    game = Game.new(board_width: 4)
+    game = Game.new(board_width: 3)
     @game_gateway = InMemoryGameGateway.new(game)
     @view_board = ViewBoard.new(@game_gateway)
     @evaluate_board = EvaluateBoard.new(@game_gateway)
@@ -32,6 +32,7 @@ class TestGame
         else
           place_ai_mark
         end
+        # place_ai_mark
       rescue RangeError
         exception_message("\nPlease choose a valid mark\n")
       rescue UpdateBoard::DuplicationError
