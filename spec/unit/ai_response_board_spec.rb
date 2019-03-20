@@ -9,7 +9,7 @@ describe AIResponse do
   end
   let(:ai_response) { AIResponse.new(game_gateway) }
 
-  xit 'can respond' do
+  it 'can respond' do
     game_gateway.update(game)
     expect(ai_response.execute).to eq(8)
   end
