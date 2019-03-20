@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 require 'gateway/game_gateway'
 require 'use_case/view_board'
@@ -6,9 +7,8 @@ require 'use_case/update_board'
 require 'use_case/evaluate_board'
 require 'use_case/clear_board'
 require 'use_case/ai_response_board'
-require 'use_case/find_winning_combinations'
 require 'ui_board'
-require 'domain/board'
+require 'domain/game'
 require 'test_doubles/game_gateway_spy'
 require 'test_doubles/game_gateway_stub'
 
@@ -18,15 +18,11 @@ describe 'tictactoe' do
   let(:view_board) { ViewBoard.new(game_gateway) }
   let(:update_board) { UpdateBoard.new(game_gateway) }
   let(:clear_board) { ClearBoard.new(game_gateway) }
-  let(:find_wining_combinations) { FindWinningCombinations.new }
-  let(:winning_combinations) do
-    find_wining_combinations.execute(game.board)
-  end
   let(:ai_response_board) do
-    AIResponse.new(game_gateway, winning_combinations)
+    AIResponse.new(game_gateway)
   end
   let(:evaluate_board) do
-    EvaluateBoard.new(game_gateway, winning_combinations)
+    EvaluateBoard.new(game_gateway)
   end
 
   it 'can initialise an empty board' do
@@ -122,5 +118,21 @@ describe 'tictactoe' do
     )
     response = evaluate_board.execute({})
     expect(response[:outcome]).to eq(:player_two_wins)
+  end
+
+  it 'cannot lose a game using AI' do
+    def ai_place_mark(mark)
+      ai_choice = ai_response_board.execute(mark)
+      update_board.execute(mark, at_index: ai_choice)
+    end
+
+    4.times do
+      ai_place_mark('X')
+      ai_place_mark('O')
+    end
+    ai_place_mark('X')
+
+    response = evaluate_board.execute({})
+    expect(response[:outcome]).to eq(:game_over)
   end
 end

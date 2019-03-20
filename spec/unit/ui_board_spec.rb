@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe UI do
   let(:ui) { UI.new(stdout: STDOUT, stdin: STDIN) }
-  it 'shows the title of the game' do
-    expect(STDOUT).to receive(:puts).with("\e[31m\e[1m\n      TIC TAC TOE\e[0m")
+  it 'can show the title of the game once the game has started' do
+    expect(STDOUT).to receive(:puts)
+      .with("\e[31m\e[1m\n      TIC TAC TOE\e[0m")
     ui.start
   end
 
