@@ -3,61 +3,68 @@ require 'spec_helper'
 
 describe EvaluateBoard do
   let(:game) { Game.new(board_width: 3) }
-  let(:board_gateway) { BoardGatewayStub.new }
+  let(:game_gateway) { GameGatewayStub.new }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
   let(:evaluate_board) do
-    EvaluateBoard.new(board_gateway, winning_combinations)
+    EvaluateBoard.new(game_gateway, winning_combinations)
   end
 
   it 'continues the game until winning combination or all squares filled' do
-    board_gateway.board = game.board
+    game_gateway.game = game
     response = evaluate_board.execute({})
     expect(response[:outcome]).to eq(:continue)
   end
 
-  context 'when there is a winner' do
+  context 'when there is a winner'  do
     it 'evaluates winning marks in a horizontal row' do
-      board_gateway.board = ['X', 'X', 'X', nil, nil, nil, nil, 'O', 'O']
+      game_gateway.game = game
+      game.board = ['X', 'X', 'X', nil, nil, nil, nil, 'O', 'O']
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_one_wins)
     end
 
     it 'evaluates winning marks in a vertical row' do
-      board_gateway.board = ['X', nil, nil, 'X', nil, nil, 'X', 'O', 'O']
+      game_gateway.game = game
+      game.board = ['X', nil, nil, 'X', nil, nil, 'X', 'O', 'O']
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_one_wins)
     end
 
     it 'evaluates winning marks in a vertical row (example 2)' do
-      board_gateway.board = [nil, 'X', nil, 'O', 'X', 'O', nil, 'X', nil]
+      game_gateway.game = game
+      game.board = [nil, 'X', nil, 'O', 'X', 'O', nil, 'X', nil]
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_one_wins)
     end
 
     it 'evaluates winning marks in a horizontal row for other player' do
-      board_gateway.board = ['O', 'O', 'O', nil, nil, nil, nil, 'X', 'X']
+      game_gateway.game = game
+      game.board = ['O', 'O', 'O', nil, nil, nil, nil, 'X', 'X']
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_two_wins)
     end
 
     it 'evaluates winning marks in right diagonal' do
-      board_gateway.board = [nil, nil, 'O', nil, 'O', nil, 'O', 'X', 'X']
+      game_gateway.game = game
+      game.board = [nil, nil, 'O', nil, 'O', nil, 'O', 'X', 'X']
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_two_wins)
     end
 
     it 'evaluates winning marks in a left diagonal' do
-      board_gateway.board = ['O', nil, nil, nil, 'O', nil, 'X', 'X', 'O']
+      game_gateway.game = game
+      game.board = ['O', nil, nil, nil, 'O', nil, 'X', 'X', 'O']
       response = evaluate_board.execute({})
       expect(response[:outcome]).to eq(:player_two_wins)
     end
   end
 
   it 'can end the game when all squares are filled' do
-    board_gateway.board = %w[X O X X O X O X O]
+    game_gateway.game = game
+    game.board = %w[X O X X O X O X O]
     response = evaluate_board.execute({})
     expect(response[:outcome]).to eq(:game_over)
   end

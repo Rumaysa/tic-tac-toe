@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'spec_helper'
-require 'gateway/board_gateway'
+require 'gateway/game_gateway'
 require 'use_case/view_board'
 require 'use_case/update_board'
 require 'use_case/evaluate_board'
@@ -9,22 +9,24 @@ require 'use_case/ai_response_board'
 require 'use_case/find_winning_combinations'
 require 'ui_board'
 require 'domain/board'
-require 'test_doubles/board_gateway_spy'
-require 'test_doubles/board_gateway_stub'
+require 'test_doubles/game_gateway_spy'
+require 'test_doubles/game_gateway_stub'
 
 describe 'tictactoe' do
   let(:game) { Game.new(board_width: 3) }
-  let(:board_gateway) { InMemoryBoardGateway.new(game.board) }
-  let(:view_board) { ViewBoard.new(board_gateway) }
-  let(:update_board) { UpdateBoard.new(board_gateway) }
-  let(:clear_board) { ClearBoard.new(board_gateway) }
+  let(:game_gateway) { InMemoryGameGateway.new(game) }
+  let(:view_board) { ViewBoard.new(game_gateway) }
+  let(:update_board) { UpdateBoard.new(game_gateway) }
+  let(:clear_board) { ClearBoard.new(game_gateway) }
   let(:find_wining_combinations) { FindWinningCombinations.new }
   let(:winning_combinations) do
     find_wining_combinations.execute(game.board)
   end
-  let(:ai_response_board) { AIResponse.new(winning_combinations) }
+  let(:ai_response_board) do
+    AIResponse.new(game_gateway, winning_combinations)
+  end
   let(:evaluate_board) do
-    EvaluateBoard.new(board_gateway, winning_combinations)
+    EvaluateBoard.new(game_gateway, winning_combinations)
   end
 
   it 'can initialise an empty board' do
@@ -107,8 +109,7 @@ describe 'tictactoe' do
   it 'can beat the player using AI' do
     def put_players_mark_at(index)
       update_board.execute('X', at_index: index)
-      board = view_board.execute
-      ai_choice = ai_response_board.execute(board)
+      ai_choice = ai_response_board.execute
       update_board.execute('O', at_index: ai_choice)
     end
 

@@ -8,12 +8,13 @@ class UpdateBoard
   end
 
   def execute(player, at_index:)
-    board = @board_gateway.fetch_board
+    game = @board_gateway.fetch_game
+    board = game.board
     raise RangeError unless index_in_range?(at_index, board.length)
     raise DuplicationError unless board[at_index].nil?
 
     board[at_index] = player
-    @board_gateway.update(board)
+    @board_gateway.update(game)
   end
 
   private

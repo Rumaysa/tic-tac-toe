@@ -5,6 +5,8 @@ require_relative '../lib/use_case/view_board'
 require_relative '../lib/ui_board'
 require_relative '../lib/use_case/update_board'
 require_relative '../lib/use_case/evaluate_board'
+require_relative '../lib/use_case/find_winning_combinations'
+require_relative '../lib/use_case/ai_response_board'
 require_relative '../lib/gateway/board_gateway'
 require_relative '../lib/domain/board'
 
@@ -14,18 +16,23 @@ class TestGame
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
     game = Game.new(board_width: 3)
     @board_gateway = InMemoryBoardGateway.new(game.board)
+    @board_gateway_hack = InMemoryBoardGateway.new(game)
     @view_board = ViewBoard.new(@board_gateway)
-    @evaluate_board = EvaluateBoard.new(@board_gateway, game.board)
+    find_winning_combinations = FindWinningCombinations.new
+    winning_combinations = find_winning_combinations.execute(game.board)
+    @evaluate_board = EvaluateBoard.new(@board_gateway, winning_combinations)
+    @minimax_ai = AIResponse.new(@board_gateway_hack, winning_combinations)
     @update_board = UpdateBoard.new(@board_gateway)
   end
 
   def execute
     @game_ui.start
     display_current_board
-    while @evaluate_board.execute == :continue
+    while @evaluate_board.execute[:outcome] == :continue
       prompt_player_to_place_mark
       begin
-        place_players_mark
+        @active_player == 'X' ? place_players_mark : place_ai_mark
+        # place_ai_mark
       rescue RangeError
         exception_message("\nPlease choose a valid mark\n")
       rescue UpdateBoard::DuplicationError
@@ -39,6 +46,13 @@ class TestGame
   end
 
   private
+
+  def place_ai_mark
+    puts "board is: #{@board_gateway_hack.fetch_board.board}"
+    ai_choice = @minimax_ai.execute
+    puts "AI CHOICE #{ai_choice}"
+    @update_board.execute(@active_player, at_index: ai_choice)
+  end
 
   def next_turn
     @active_player = @active_player == 'X' ? 'O' : 'X'
@@ -65,7 +79,7 @@ class TestGame
   end
 
   def display_outcome
-    game_status = @evaluate_board.execute
+    game_status = @evaluate_board.execute[:outcome]
     outcome = @game_ui.interpret_game_status(game_status)
     @game_ui.display_message(outcome)
   end
