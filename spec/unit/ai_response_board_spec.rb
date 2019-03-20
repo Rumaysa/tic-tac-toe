@@ -161,7 +161,7 @@ describe AIResponse do
          'O', 'X', 'X',
          nil, nil, nil], 8
       )
-    end 
+    end
 
     it 'can pick the winning move from six available moves' do
       expected_AI_response(

@@ -13,6 +13,10 @@ class Game
     @board.compact.length == 9
   end
 
+  def draw?
+    full_board? unless win_for_player?('X') || win_for_player?('O')
+  end
+
   def win_for_player?(player)
     players_marks = []
     @board.each_with_index { |cell, i| players_marks << i if cell == player }
