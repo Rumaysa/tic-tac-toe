@@ -2,6 +2,7 @@
 
 class UpdateBoard
   DuplicationError = Class.new(RuntimeError)
+  IncorrectMarkerError = Class.new(RuntimeError)
 
   def initialize(board_gateway)
     @board_gateway = board_gateway
@@ -12,6 +13,7 @@ class UpdateBoard
     board = game.board
     raise RangeError unless index_in_range?(at_index, board.length)
     raise DuplicationError unless board[at_index].nil?
+    raise IncorrectMarkerError unless valid_mark?(player)
 
     board[at_index] = player
     @board_gateway.update(game)
@@ -21,5 +23,9 @@ class UpdateBoard
 
   def index_in_range?(index, range)
     (0...range).cover?(index)
+  end
+
+  def valid_mark?(player)
+    %w[X O].include?(player)
   end
 end

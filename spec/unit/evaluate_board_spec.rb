@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe EvaluateBoard do
@@ -14,7 +15,7 @@ describe EvaluateBoard do
     expect(response[:outcome]).to eq(:continue)
   end
 
-  context 'when there is a winner'  do
+  context 'when there is a winner' do
     it 'evaluates winning marks in a horizontal row' do
       game_gateway.game = game
       game.board = ['X', 'X', 'X', nil, nil, nil, nil, 'O', 'O']

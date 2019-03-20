@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Game
-  attr_accessor :board 
+  attr_accessor :board
   def initialize(board_width:)
     @board_width = board_width
     size = board_width * board_width
@@ -23,7 +23,6 @@ class Game
   end
 
   private
-
 
   def match?(players_marks, combination)
     (combination & players_marks).length == 3
@@ -72,5 +71,4 @@ class Game
     end
     [negative_diagonal, positive_diagonal]
   end
-  
 end

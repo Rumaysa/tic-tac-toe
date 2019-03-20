@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe UpdateBoard do
@@ -6,7 +7,7 @@ describe UpdateBoard do
   let(:board_gateway) { GameGatewaySpy.new(game) }
   let(:update_board) { UpdateBoard.new(board_gateway) }
 
-  it 'can update the board with players mark'  do
+  it 'can update the board with players mark' do
     update_board.execute('X', at_index: 6)
     board_gateway.game
     expect(game.board).to eq(

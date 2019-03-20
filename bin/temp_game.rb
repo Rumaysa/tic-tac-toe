@@ -13,7 +13,7 @@ class TestGame
   def initialize
     @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
-    game = Game.new(board_width: 3)
+    game = Game.new(board_width: 4)
     @game_gateway = InMemoryGameGateway.new(game)
     @view_board = ViewBoard.new(@game_gateway)
     @evaluate_board = EvaluateBoard.new(@game_gateway)
@@ -25,10 +25,13 @@ class TestGame
     @game_ui.start
     display_current_board
     while @evaluate_board.execute[:outcome] == :continue
-      # prompt_player_to_place_mark
       begin
-        @active_player == 'X' ? place_players_mark : place_ai_mark
-        # place_ai_mark
+        if @active_player == 'X'
+          prompt_player_to_place_mark
+          place_players_mark
+        else
+          place_ai_mark
+        end
       rescue RangeError
         exception_message("\nPlease choose a valid mark\n")
       rescue UpdateBoard::DuplicationError
@@ -44,9 +47,7 @@ class TestGame
   private
 
   def place_ai_mark
-    puts "board is: #{@game_gateway.fetch_game.board}"
-    ai_choice = @minimax_ai.execute(active_player: @active_player)
-    puts "AI CHOICE #{ai_choice}"
+    ai_choice = @minimax_ai.execute(@active_player)
     @update_board.execute(@active_player, at_index: ai_choice)
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 require 'gateway/game_gateway'
 require 'use_case/view_board'

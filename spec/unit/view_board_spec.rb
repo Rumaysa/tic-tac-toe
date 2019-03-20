@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe ViewBoard do
@@ -14,12 +15,20 @@ describe ViewBoard do
   it 'displays the board with a mark' do
     game.board = [nil, nil, 'X', nil, nil, nil, nil, nil, nil]
     game_gateway.game = game
-    expect(view_board.execute).to eq([nil, nil, 'X', nil, nil, nil, nil, nil, nil])
+    expect(view_board.execute).to eq(
+      [nil, nil, 'X',
+       nil, nil, nil,
+       nil, nil, nil]
+    )
   end
 
   it 'displays the board with players mark and AIs mark'  do
     game.board = [nil, nil, 'X', 'O', nil, nil, nil, nil, nil]
     game_gateway.game = game
-    expect(view_board.execute).to eq([nil, nil, 'X', 'O', nil, nil, nil, nil, nil])
+    expect(view_board.execute).to eq(
+      [nil, nil, 'X',
+       'O', nil, nil,
+       nil, nil, nil]
+    )
   end
 end
