@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Game
-  attr_accessor :board
+  attr_accessor :board, :player_turn
   def initialize(board_width:)
     @board_width = board_width
     size = board_width * board_width
     @board = Array.new(size)
     @winning_combinations = find_winning_combinations
+    @player_turn = 'X'
   end
 
   def full_board?

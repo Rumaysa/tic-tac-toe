@@ -3,6 +3,7 @@
 class UpdateBoard
   DuplicationError = Class.new(RuntimeError)
   IncorrectMarkerError = Class.new(RuntimeError)
+  WrongTurnError = Class.new(RuntimeError)
 
   def initialize(board_gateway)
     @board_gateway = board_gateway
@@ -14,9 +15,16 @@ class UpdateBoard
     raise RangeError unless index_in_range?(at_index, board.length)
     raise DuplicationError unless board[at_index].nil?
     raise IncorrectMarkerError unless valid_mark?(player)
+    raise WrongTurnError if player != game.player_turn
 
     board[at_index] = player
     @board_gateway.update(game)
+    if player == 'X'
+      game.player_turn = 'O'
+    else
+      game.player_turn = 'X'
+    end
+    #player == 'X' ? game.player_turn = 'O' : game.player_turn = 'X'
   end
 
   private
