@@ -2,12 +2,12 @@
 
 class Game
   attr_accessor :board, :player_turn
-  def initialize(board_width:)
+  def initialize(board_width:, starting_player: 'X')
     @board_width = board_width
     size = board_width * board_width
     @board = Array.new(size)
     @winning_combinations = find_winning_combinations
-    @player_turn = 'X'
+    @player_turn = starting_player
   end
 
   def full_board?
