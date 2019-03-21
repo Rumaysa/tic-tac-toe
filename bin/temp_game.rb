@@ -11,7 +11,6 @@ require_relative '../lib/domain/game'
 
 class TestGame
   def initialize
-    @active_player = 'X'
     @game_ui = UI.new(stdout: STDOUT, stdin: STDIN)
     game = Game.new(board_width: 3)
     @game_gateway = InMemoryGameGateway.new(game)
@@ -19,6 +18,7 @@ class TestGame
     @evaluate_board = EvaluateBoard.new(@game_gateway)
     @minimax_ai = AIResponse.new(@game_gateway)
     @update_board = UpdateBoard.new(@game_gateway)
+    @active_player = game.player_turn
   end
 
   def execute
@@ -53,7 +53,8 @@ class TestGame
   end
 
   def next_turn
-    @active_player = @active_player == 'X' ? 'O' : 'X'
+    game = @game_gateway.fetch_game
+    @active_player = game.player_turn
   end
 
   def prompt_player_to_place_mark
