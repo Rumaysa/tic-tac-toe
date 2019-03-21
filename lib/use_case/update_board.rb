@@ -19,12 +19,7 @@ class UpdateBoard
 
     board[at_index] = player
     @board_gateway.update(game)
-    if player == 'X'
-      game.player_turn = 'O'
-    else
-      game.player_turn = 'X'
-    end
-    #player == 'X' ? game.player_turn = 'O' : game.player_turn = 'X'
+    game.player_turn = player == 'X' ? 'O' : 'X'
   end
 
   private
