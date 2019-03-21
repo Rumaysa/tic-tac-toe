@@ -39,6 +39,13 @@ describe UpdateBoard do
         update_board.execute('X', at_index: -1)
       end.to raise_error(RangeError)
     end
+    it 'can raise a wrongturn error when the wrong turn is taken' do
+      board_gateway.game
+      update_board.execute('X', at_index: 6)
+      expect do
+        update_board.execute('X', at_index: 0)
+      end.to raise_error(UpdateBoard::WrongTurnError)
+    end
   end
   context 'when updating the board with a multiple markers' do
     it 'can update the board with players mark' do
